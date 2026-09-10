@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kịch Bản Lời Thoại Thuyết Trình</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Lexend', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        darkbg: '#090d16',
+                        darkcard: '#131b2e',
+                        darkborder: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.8);
+        }
+
+        .speech-text-sm { font-size: 1.125rem; line-height: 1.85rem; }
+        .speech-text-md { font-size: 1.5rem; line-height: 2.35rem; }
+        .speech-text-lg { font-size: 2rem; line-height: 3rem; }
+        .speech-text-xl { font-size: 2.5rem; line-height: 3.75rem; }
+
+        .teleprompter-line {
+            position: absolute;
+            top: 35%;
+            left: 0;
+            right: 0;
+            height: 30%;
+            border-top: 2px dashed rgba(239, 68, 68, 0.5);
+            border-bottom: 2px dashed rgba(239, 68, 68, 0.5);
+            pointer-events: none;
+            background: rgba(239, 68, 68, 0.03);
+            z-index: 10;
+        }
+
+        .mirror-mode {
+            transform: scaleX(-1);
+        }
+
+        /* Smooth slide transitions */
+        .slide-enter {
+            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-slate-100 min-h-screen flex flex-col transition-colors duration-300 antialiased overflow-x-hidden">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+            
+            <!-- Left: Speaker Tab Switches -->
+            <div class="flex items-center space-x-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+                <button id="tab-cam" onclick="switchSpeaker('cam')" 
+                    class="tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm border border-transparent whitespace-nowrap active:scale-95">
+                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+                    <span>Bài 1: Hồng Cẩm</span>
+                    <span class="text-xs opacity-75 font-normal hidden sm:inline">(Sports & Health)</span>
+                </button>
+
+                <button id="tab-dung" onclick="switchSpeaker('dung')" 
+                    class="tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm border border-transparent whitespace-nowrap active:scale-95">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                    <span>Bài 2: Ngọc Dung</span>
+                    <span class="text-xs opacity-75 font-normal hidden sm:inline">(Global Warming)</span>
+                </button>
+            </div>
+
+            <!-- Right: View Modes & Presenter Tools -->
+            <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-end">
+                
+                <!-- View Mode Switcher -->
+                <div class="bg-slate-900/90 p-1 rounded-xl border border-slate-800 flex items-center space-x-1">
+                    <button id="mode-card-btn" onclick="setViewMode('card')" title="Chế độ Từng Slide"
+                        class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all">
+                        <i class="fa-solid fa-square-poll-vertical"></i>
+                        <span>Từng Slide</span>
+                    </button>
+                    <button id="mode-prompter-btn" onclick="setViewMode('prompter')" title="Chế độ Máy Đọc (Teleprompter)"
+                        class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all">
+                        <i class="fa-solid fa-scroll"></i>
+                        <span>Teleprompter</span>
+                    </button>
+                </div>
+
+                <!-- Font Size Controller -->
+                <div class="bg-slate-900/90 p-1 rounded-xl border border-slate-800 flex items-center space-x-1">
+                    <button onclick="changeFontSize(-1)" class="w-8 h-8 rounded-lg hover:bg-slate-800 text-xs font-bold transition flex items-center justify-center text-slate-300" title="Giảm cỡ chữ">A-</button>
+                    <span id="font-size-label" class="text-xs font-bold text-indigo-400 px-1">MD</span>
+                    <button onclick="changeFontSize(1)" class="w-8 h-8 rounded-lg hover:bg-slate-800 text-xs font-bold transition flex items-center justify-center text-slate-300" title="Tăng cỡ chữ">A+</button>
+                </div>
+
+                <!-- Stopwatch / Timer -->
+                <div class="flex items-center space-x-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl">
+                    <i class="fa-regular fa-clock text-indigo-400 text-xs"></i>
+                    <span id="timer-display" class="font-mono text-sm font-bold text-slate-200">00:00</span>
+                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="ml-1 text-slate-400 hover:text-emerald-400 transition text-xs">
+                        <i id="timer-icon" class="fa-solid fa-play"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="text-slate-400 hover:text-amber-400 transition text-xs">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 flex flex-col justify-between">
+        
+        <!-- Presentation Meta Information Banner -->
+        <div id="speaker-info-card" class="mb-4 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800/80 shadow-lg flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <div class="flex items-center space-x-2">
+                    <span id="speaker-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        Diễn giả
+                    </span>
+                    <h1 id="speaker-name" class="text-lg font-bold text-white">
+                        Nguyễn Thị Hồng Cẩm
+                    </h1>
+                </div>
+                <p id="speaker-topic" class="text-xs text-slate-400 mt-1">
+                    Chủ đề: <span class="text-slate-200 font-medium">The Health Benefits of Sports</span>
+                </p>
+            </div>
+
+            <!-- Target Duration / Key Indicators -->
+            <div class="flex items-center space-x-3 text-xs">
+                <div class="bg-slate-950/60 border border-slate-800/80 px-3 py-1.5 rounded-xl flex items-center space-x-1.5">
+                    <i class="fa-solid fa-hourglass-half text-amber-400"></i>
+                    <span class="text-slate-400">Thời lượng:</span>
+                    <span id="target-duration" class="font-bold text-amber-300">~ 3.5 - 4 phút</span>
+                </div>
+                <div class="bg-slate-950/60 border border-slate-800/80 px-3 py-1.5 rounded-xl flex items-center space-x-1.5">
+                    <i class="fa-solid fa-layer-group text-indigo-400"></i>
+                    <span class="text-slate-400">Tổng slide:</span>
+                    <span id="total-slides-count" class="font-bold text-indigo-300">6 Slides</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide Thumbnails / Selector Navigation Bar -->
+        <div id="slide-selector-container" class="mb-5 overflow-x-auto pb-2 scrollbar-none">
+            <div id="slide-nav-pills" class="flex items-center space-x-2 min-w-max">
+                <!-- Dynamically generated slide selector buttons -->
+            </div>
+        </div>
+
+        <!-- VIEW 1: CARD MODE (Slide by Slide Focus) -->
+        <div id="card-view" class="flex-1 flex flex-col justify-between space-y-4">
+            
+            <!-- Active Slide Display Card -->
+            <div id="main-slide-card" class="slide-enter flex-1 bg-darkcard/90 border border-slate-800 rounded-2xl p-5 md:p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden backdrop-blur-xl">
+                
+                <!-- Slide Header Bar -->
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-800/80 pb-4 mb-4 gap-2">
+                    <div class="flex items-center space-x-3">
+                        <span id="slide-number-tag" class="w-10 h-10 rounded-xl bg-indigo-600 text-white font-extrabold text-base flex items-center justify-center shadow-lg shadow-indigo-600/30">
+                            1
+                        </span>
+                        <div>
+                            <span id="slide-badge-title" class="text-xs font-bold tracking-wider text-indigo-400 uppercase">
+                                SLIDE 1: TITLE SLIDE
+                            </span>
+                            <h2 id="slide-subtitle" class="text-sm font-semibold text-slate-300">
+                                Mở đầu & Giới thiệu bản thân
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <span id="slide-timing-badge" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 flex items-center space-x-1">
+                            <i class="fa-regular fa-clock text-amber-400"></i>
+                            <span id="slide-time-estimate">~40s</span>
+                        </span>
+
+                        <button onclick="speakCurrentText()" id="tts-btn" class="px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-900/40 hover:bg-indigo-800/60 text-indigo-300 border border-indigo-700/50 transition flex items-center space-x-1.5" title="Phát âm tiếng Anh đọc mẫu">
+                            <i class="fa-solid fa-volume-high"></i>
+                            <span class="hidden sm:inline">Nghe mẫu</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Slide Speech Text Area (The Core Cue Script) -->
+                <div class="my-auto py-4">
+                    <!-- Summary Card -->
+                    <div id="slide-summary-box" class="mb-4 p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 flex items-start space-x-2">
+                        <i class="fa-solid fa-circle-info text-indigo-400 mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-200">Nội dung hiển thị trên Slide chiếu:</strong>
+                            <p id="slide-summary-text" class="text-slate-400 mt-0.5">Title, Specific Purpose Statement, Student Info</p>
+                        </div>
+                    </div>
+
+                    <!-- English Speech Sentences (One per line) -->
+                    <div class="relative">
+                        <div id="speech-content-box" class="space-y-3 select-text">
+                            <!-- Sentences dynamically generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide Navigation Footer Inside Card -->
+                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                    <button id="prev-slide-btn" onclick="prevSlide()" 
+                        class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm transition flex items-center space-x-2 shadow-md disabled:opacity-30 disabled:cursor-not-allowed">
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span>Slide trước</span>
+                    </button>
+
+                    <div id="slide-counter-indicator" class="text-xs font-bold text-slate-400">
+                        Trang <span id="current-slide-index" class="text-indigo-400 font-extrabold text-sm">1</span> / <span id="total-slides-indicator">6</span>
+                    </div>
+
+                    <button id="next-slide-btn" onclick="nextSlide()" 
+                        class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition flex items-center space-x-2 shadow-lg shadow-indigo-600/30 disabled:opacity-30 disabled:cursor-not-allowed">
+                        <span>Slide tiếp</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Keyboard / Touch Gesture Hints -->
+            <div class="text-center text-xs text-slate-500 py-1 flex items-center justify-center space-x-4">
+                <span><kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300 font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300 font-mono">→</kbd> hoặc <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300 font-mono">Space</kbd> để chuyển slide</span>
+                <span class="hidden sm:inline">•</span>
+                <span class="hidden sm:inline">Vuốt trái/phải trên màn hình cảm ứng</span>
+            </div>
+        </div>
+
+        <!-- VIEW 2: TELEPROMPTER MODE (Continuous Scrolling) -->
+        <div id="prompter-view" class="hidden flex-1 flex-col space-y-3 relative">
+            
+            <!-- Prompter Controls Header Bar -->
+            <div class="bg-darkcard border border-slate-800 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 shadow-md">
+                <div class="flex items-center space-x-3">
+                    <button id="scroll-toggle-btn" onclick="toggleAutoScroll()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold flex items-center space-x-2 shadow">
+                        <i id="scroll-icon" class="fa-solid fa-play"></i>
+                        <span id="scroll-btn-text">Cuộn tự động</span>
+                    </button>
+
+                    <div class="flex items-center space-x-2 text-xs text-slate-300">
+                        <span>Tốc độ:</span>
+                        <input type="range" id="scroll-speed" min="1" max="10" value="3" oninput="updateScrollSpeed()" class="w-24 accent-indigo-500 cursor-pointer">
+                        <span id="speed-display" class="font-bold text-indigo-400">3x</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button onclick="toggleMirrorMode()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 flex items-center space-x-1">
+                        <i class="fa-solid fa-arrows-left-right"></i>
+                        <span>Lật gương (Mirror)</span>
+                    </button>
+                    <button onclick="resetPrompterScroll()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 flex items-center space-x-1">
+                        <i class="fa-solid fa-arrow-up-to-line"></i>
+                        <span>Về đầu</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prompter Text Container Window -->
+            <div class="relative flex-1 min-h-[500px] max-h-[70vh] rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden shadow-2xl">
+                <!-- Focal guide overlay line -->
+                <div class="teleprompter-line"></div>
+
+                <div id="prompter-scroll-box" class="h-full overflow-y-auto px-8 py-48 space-y-12 transition-all">
+                    <!-- Prompter script contents injected via JS -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        /* Speech Data Structure for Both Speakers */
+        const scriptsData = {
+            cam: {
+                name: "Nguyễn Thị Hồng Cẩm",
+                topic: "The Health Benefits of Sports",
+                targetTime: "~3.5 - 4 phút",
+                badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+                slides: [
+                    {
+                        number: 1,
+                        title: "SLIDE 1: TITLE SLIDE",
+                        subtitle: "Mở đầu & Giới thiệu bản thân",
+                        summary: "Title, Specific Purpose Statement, Student Info",
+                        time: "~40s",
+                        text: [
+                            "Hello teacher and everyone.",
+                            "My name is Nguyễn Thị Hồng Cẩm.",
+                            "Today, I am very happy to share with you a very practical topic: The Health Benefits of Sports.",
+                            "My specific purpose today is to show you how playing sports improves our physical health, mental wellbeing, and essential life skills.",
+                            "Health is our most valuable treasure, and sports are the best key to unlock it!"
+                        ]
+                    },
+                    {
+                        number: 2,
+                        title: "SLIDE 2: OVERVIEW",
+                        subtitle: "Tổng quan bài thuyết trình",
+                        summary: "Overview (3 Main Parts: Physical Health, Mental Wellbeing, Social Skills)",
+                        time: "~30s",
+                        text: [
+                            "To make it easy to follow, my presentation has 3 main parts:",
+                            "First, Physical Health – how sports build a stronger body.",
+                            "Second, Mental Wellbeing – how sports bring us a happy mind.",
+                            "And third, Social Skills – how sports teach us valuable life lessons.",
+                            "Let’s start with the first point!"
+                        ]
+                    },
+                    {
+                        number: 3,
+                        title: "SLIDE 3: MAIN POINT 1",
+                        subtitle: "Sức khỏe thể chất (Physical Health)",
+                        summary: "Heart health, Strong bones/muscles, Weight control, Prevent diseases",
+                        time: "~45s",
+                        text: [
+                            "First, playing sports strongly improves your physical health.",
+                            "When you run, swim, or play football, your heart pumps faster and becomes stronger.",
+                            "It also builds strong bones and healthy muscles.",
+                            "Moreover, sports help you burn extra calories every day.",
+                            "This controls your weight and prevents many dangerous illnesses like diabetes or heart disease."
+                        ]
+                    },
+                    {
+                        number: 4,
+                        title: "SLIDE 4: MAIN POINT 2",
+                        subtitle: "Sức khỏe tinh thần (Mental Wellbeing)",
+                        summary: "Endorphins (happy hormones), Reduce stress, Better sleep, Memory",
+                        time: "~45s",
+                        text: [
+                            "Second, sports are a powerful booster for your mental health.",
+                            "After a long day of studying or working, exercising releases endorphins – the happy hormones in your brain.",
+                            "This quickly reduces stress and anxiety.",
+                            "Besides, playing sports helps you fall asleep faster and enjoy a deeper sleep at night.",
+                            "As a result, you will have better concentration and a sharper memory the next day."
+                        ]
+                    },
+                    {
+                        number: 5,
+                        title: "SLIDE 5: MAIN POINT 3",
+                        subtitle: "Kỹ năng sống & Xã hội (Social & Life Skills)",
+                        summary: "Teamwork, Communication, Lifelong friends, Self-discipline",
+                        time: "~45s",
+                        text: [
+                            "Third, sports develop essential life skills.",
+                            "In team sports like basketball or volleyball, you learn how to communicate, cooperate, and support your teammates.",
+                            "It is also a great way to make lifelong friends.",
+                            "Furthermore, regular practice builds strong self-discipline and confidence.",
+                            "It teaches you how to manage your time effectively between study and exercise."
+                        ]
+                    },
+                    {
+                        number: 6,
+                        title: "SLIDE 6: RECAP & CALL TO ACTION",
+                        subtitle: "Tóm tắt & Lời kêu gọi hành động",
+                        summary: "Strong body, Happy mind, 30 mins a day, Thank you",
+                        time: "~40s",
+                        text: [
+                            "To sum up, sports give us a strong body, a happy mind, and valuable life skills.",
+                            "You don't need to be a professional athlete.",
+                            "Just start small today!",
+                            "Spending only 30 minutes a day playing sports will truly change your life.",
+                            "Thank you very much for your time and listening!",
+                            "Wish you all good health!"
+                        ]
+                    }
+                ]
+            },
+            dung: {
+                name: "Nguyễn Thị Ngọc Dung",
+                topic: "Global Warming & Climate Change",
+                targetTime: "~3.5 - 4 phút",
+                badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+                slides: [
+                    {
+                        number: 1,
+                        title: "SLIDE 1: TITLE SLIDE",
+                        subtitle: "Đặt vấn đề & Sự cấp bách",
+                        summary: "Title, Specific Purpose Statement, Student Info",
+                        time: "~40s",
+                        text: [
+                            "Hello teacher and everyone.",
+                            "My name is Nguyễn Thị Ngọc Dung.",
+                            "Nowadays, global warming and climate change are seen as huge environmental concerns for most people.",
+                            "But what's the reason for it and why is it such an urgent problem?",
+                            "Today, I'm going to discuss the main causes of global warming and why it poses such a severe threat to our planet."
+                        ]
+                    },
+                    {
+                        number: 2,
+                        title: "SLIDE 2: OVERVIEW",
+                        subtitle: "Cấu trúc bài nói (Causes vs. Effects)",
+                        summary: "Overview (Part 1: The Causes | Part 2: The Effects)",
+                        time: "~30s",
+                        text: [
+                            "To help you easily follow along, my presentation is divided into two main parts:",
+                            "First, The Causes – how human activities and air pollution heat up the Earth.",
+                            "Second, The Effects – how extreme weather, loss of biodiversity, and rising sea levels threaten human life.",
+                            "Now, let’s look at the first part!"
+                        ]
+                    },
+                    {
+                        number: 3,
+                        title: "SLIDE 3: MAIN POINT 1",
+                        subtitle: "Nguyên nhân chính (The Causes)",
+                        summary: "Fossil Fuels (Oil, Gas, Coal), Air Pollution, Non-biodegradable waste",
+                        time: "~45s",
+                        text: [
+                            "First of all, the main causes mostly come from pollution.",
+                            "Particularly, air pollution comes from toxic gases released by burning fossil fuels like oil, gas, and coal.",
+                            "When burned, these gases get trapped in the atmosphere and continue to heat up the air.",
+                            "Other than that, non-biodegradable materials such as plastic bags and industrial waste also contribute heavily to this problem."
+                        ]
+                    },
+                    {
+                        number: 4,
+                        title: "SLIDE 4: MAIN POINT 2 (PART 1)",
+                        subtitle: "Tác động đến Tự nhiên (Impact on Nature)",
+                        summary: "Extreme Weather (Hurricanes, Droughts), Loss of Biodiversity & Habitats",
+                        time: "~45s",
+                        text: [
+                            "So, why should we be so concerned about global warming?",
+                            "First, as the Earth gets hotter, climates are going to become harsher and more extreme.",
+                            "Natural disasters like hurricanes, droughts, and strong storms will become more frequent and violent.",
+                            "As well as that, many animals are threatened because they are losing their natural habitats as temperatures rise."
+                        ]
+                    },
+                    {
+                        number: 5,
+                        title: "SLIDE 5: MAIN POINT 2 (PART 2)",
+                        subtitle: "Đe dọa đến Con người (Threat to Humans)",
+                        summary: "Melting Ice, Rising Sea Levels, Extreme Heat, Agriculture Impact",
+                        time: "~45s",
+                        text: [
+                            "Worst of all, we, humans, are going to get directly affected by this too.",
+                            "As ice melts at the poles, rising sea levels pose a serious threat to millions of people living in coastal areas.",
+                            "Furthermore, many regions in the world are becoming almost way too hot and dry to live, directly affecting agriculture and our daily life."
+                        ]
+                    },
+                    {
+                        number: 6,
+                        title: "SLIDE 6: RECAP & CALL TO ACTION",
+                        subtitle: "Kết luận & Hành động xanh",
+                        summary: "Protect Our Planet, Small Green Actions, Thank You",
+                        time: "~40s",
+                        text: [
+                            "To sum up, global warming is a real and urgent threat caused by pollution, but small green actions today can make a big difference for tomorrow.",
+                            "That’s all for my presentation today.",
+                            "I hope you found this helpful and perhaps even learned a thing or two from this.",
+                            "Thank you so much for listening!"
+                        ]
+                    }
+                ]
+            }
+        };
+
+        /* State Management Variables */
+        let currentSpeakerKey = 'cam';
+        let currentSlideIndex = 0;
+        let viewMode = 'card'; // 'card' | 'prompter'
+        let fontSizeLevel = 1; // 0: sm, 1: md, 2: lg, 3: xl
+        const fontClasses = ['speech-text-sm', 'speech-text-md', 'speech-text-lg', 'speech-text-xl'];
+        const fontSizeLabels = ['SM', 'MD', 'LG', 'XL'];
+
+        /* Timer Variables */
+        let isTimerRunning = false;
+        let timerSeconds = 0;
+        let timerInterval = null;
+
+        /* Teleprompter Scrolling Variables */
+        let isAutoScrolling = false;
+        let scrollInterval = null;
+        let scrollSpeed = 3;
+
+        // Speaker switching
+        function switchSpeaker(speakerKey) {
+            currentSpeakerKey = speakerKey;
+            currentSlideIndex = 0;
+            updateSpeakerHeader();
+            updateTabStyles();
+            
+            if (viewMode === 'card') {
+                renderCurrentSlideCard();
+            } else {
+                renderPrompterView();
+            }
+        }
+
+        // Update speaker header info
+        function updateSpeakerHeader() {
+            const speaker = scriptsData[currentSpeakerKey];
+            document.getElementById('speaker-name').innerText = speaker.name;
+            document.getElementById('speaker-topic').innerHTML = `Chủ đề: <span class="text-slate-200 font-medium">${speaker.topic}</span>`;
+            document.getElementById('target-duration').innerText = speaker.targetTime;
+            document.getElementById('total-slides-count').innerText = `${speaker.slides.length} Slides`;
+            
+            const badge = document.getElementById('speaker-badge');
+            badge.className = `px-2.5 py-0.5 rounded-full text-xs font-bold border ${speaker.badgeColor}`;
+        }
+
+        // Tab styles update
+        function updateTabStyles() {
+            const camBtn = document.getElementById('tab-cam');
+            const dungBtn = document.getElementById('tab-dung');
+
+            if (currentSpeakerKey === 'cam') {
+                camBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-500 whitespace-nowrap active:scale-95 transition-all";
+                dungBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-slate-900/80 hover:bg-slate-800 text-slate-400 border border-slate-800 whitespace-nowrap active:scale-95 transition-all";
+            } else {
+                dungBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 border border-emerald-500 whitespace-nowrap active:scale-95 transition-all";
+                camBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-slate-900/80 hover:bg-slate-800 text-slate-400 border border-slate-800 whitespace-nowrap active:scale-95 transition-all";
+            }
+        }
+
+        // View mode switching
+        function setViewMode(mode) {
+            viewMode = mode;
+            const cardView = document.getElementById('card-view');
+            const prompterView = document.getElementById('prompter-view');
+            const cardBtn = document.getElementById('mode-card-btn');
+            const prompterBtn = document.getElementById('mode-prompter-btn');
+
+            if (mode === 'card') {
+                cardView.classList.remove('hidden');
+                cardView.classList.add('flex');
+                prompterView.classList.add('hidden');
+                prompterView.classList.remove('flex');
+
+                cardBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all bg-indigo-600 text-white shadow-sm";
+                prompterBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all text-slate-400 hover:text-white";
+
+                renderCurrentSlideCard();
+            } else {
+                prompterView.classList.remove('hidden');
+                prompterView.classList.add('flex');
+                cardView.classList.add('hidden');
+                cardView.classList.remove('flex');
+
+                prompterBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all bg-indigo-600 text-white shadow-sm";
+                cardBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all text-slate-400 hover:text-white";
+
+                renderPrompterView();
+            }
+        }
+
+        // Navigation controls
+        function nextSlide() {
+            const slides = scriptsData[currentSpeakerKey].slides;
+            if (currentSlideIndex < slides.length - 1) {
+                currentSlideIndex++;
+                renderCurrentSlideCard();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                renderCurrentSlideCard();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            renderCurrentSlideCard();
+        }
+
+        // Dynamic Slide Navigation Pills
+        function renderSlideNavPills() {
+            const container = document.getElementById('slide-nav-pills');
+            const slides = scriptsData[currentSpeakerKey].slides;
+            container.innerHTML = '';
+
+            slides.forEach((slide, idx) => {
+                const button = document.createElement('button');
+                const isActive = idx === currentSlideIndex;
+                button.onclick = () => goToSlide(idx);
+
+                if (isActive) {
+                    button.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-indigo-600 text-white shadow-md border border-indigo-400";
+                } else {
+                    button.className = "px-3.5 py-1.5 rounded-xl text-xs font-medium transition flex items-center space-x-2 bg-slate-900/80 hover:bg-slate-800 text-slate-400 border border-slate-800";
+                }
+
+                button.innerHTML = `
+                    <span class="w-2 h-2 rounded-full ${isActive ? 'bg-white' : 'bg-slate-500'}"></span>
+                    <span>Slide ${slide.number}</span>
+                `;
+                container.appendChild(button);
+            });
+        }
+
+        // Render Active Slide Card
+        function renderCurrentSlideCard() {
+            const slides = scriptsData[currentSpeakerKey].slides;
+            const currentSlide = slides[currentSlideIndex];
+
+            // Trigger CSS entry animation
+            const cardElem = document.getElementById('main-slide-card');
+            cardElem.classList.remove('slide-enter');
+            void cardElem.offsetWidth; 
+            cardElem.classList.add('slide-enter');
+
+            document.getElementById('slide-number-tag').innerText = currentSlide.number;
+            document.getElementById('slide-badge-title').innerText = currentSlide.title;
+            document.getElementById('slide-subtitle').innerText = currentSlide.subtitle;
+            document.getElementById('slide-time-estimate').innerText = currentSlide.time;
+            document.getElementById('slide-summary-text').innerText = currentSlide.summary;
+            
+            // Render sentences line by line
+            const speechBox = document.getElementById('speech-content-box');
+            speechBox.innerHTML = '';
+
+            const sentences = Array.isArray(currentSlide.text) ? currentSlide.text : [currentSlide.text];
+            sentences.forEach(sentence => {
+                const line = document.createElement('div');
+                line.className = `${fontClasses[fontSizeLevel]} font-medium text-slate-100 tracking-wide font-sans leading-relaxed py-1.5 flex items-start space-x-2 border-b border-slate-800/40 last:border-0`;
+                line.innerHTML = `<span class="text-indigo-400 font-bold select-none text-sm mt-1">•</span><span>"${sentence}"</span>`;
+                speechBox.appendChild(line);
+            });
+
+            document.getElementById('current-slide-index').innerText = currentSlideIndex + 1;
+            document.getElementById('total-slides-indicator').innerText = slides.length;
+
+            // Nav Buttons State
+            document.getElementById('prev-slide-btn').disabled = currentSlideIndex === 0;
+            document.getElementById('next-slide-btn').disabled = currentSlideIndex === slides.length - 1;
+
+            renderSlideNavPills();
+        }
+
+        // Render Teleprompter View
+        function renderPrompterView() {
+            const box = document.getElementById('prompter-scroll-box');
+            const slides = scriptsData[currentSpeakerKey].slides;
+
+            box.innerHTML = '';
+            slides.forEach((slide) => {
+                const block = document.createElement('div');
+                block.className = 'py-6 border-b border-slate-800/60 last:border-0';
+                
+                const sentences = Array.isArray(slide.text) ? slide.text : [slide.text];
+                const sentencesHtml = sentences.map(s => `
+                    <div class="${fontClasses[fontSizeLevel]} font-medium text-slate-100 leading-relaxed font-sans py-2 flex items-start space-x-2">
+                        <span class="text-indigo-400 font-bold select-none text-sm mt-1">•</span>
+                        <span>${s}</span>
+                    </div>
+                `).join('');
+
+                block.innerHTML = `
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40">
+                            Slide ${slide.number}
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">${slide.subtitle}</span>
+                        <span class="text-xs text-amber-400/80 ml-auto"><i class="fa-regular fa-clock mr-1"></i>${slide.time}</span>
+                    </div>
+                    <div class="space-y-1">
+                        ${sentencesHtml}
+                    </div>
+                `;
+                box.appendChild(block);
+            });
+        }
+
+        // Font size control
+        function changeFontSize(delta) {
+            fontSizeLevel = Math.max(0, Math.min(3, fontSizeLevel + delta));
+            document.getElementById('font-size-label').innerText = fontSizeLabels[fontSizeLevel];
+            if (viewMode === 'card') {
+                renderCurrentSlideCard();
+            } else {
+                renderPrompterView();
+            }
+        }
+
+        // Web Speech API Practice Sound
+        function speakCurrentText() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const rawText = scriptsData[currentSpeakerKey].slides[currentSlideIndex].text;
+                const fullText = Array.isArray(rawText) ? rawText.join(' ') : rawText;
+                const utterance = new SpeechSynthesisUtterance(fullText);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Timer Functions
+        function toggleTimer() {
+            const icon = document.getElementById('timer-icon');
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                icon.className = "fa-solid fa-play";
+            } else {
+                isTimerRunning = true;
+                icon.className = "fa-solid fa-pause";
+                timerInterval = setInterval(() => {
+                    timerSeconds++;
+                    const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+                    const secs = String(timerSeconds % 60).padStart(2, '0');
+                    document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = 0;
+            document.getElementById('timer-display').innerText = "00:00";
+            document.getElementById('timer-icon').className = "fa-solid fa-play";
+        }
+
+        // Teleprompter Auto-Scroll
+        function toggleAutoScroll() {
+            const box = document.getElementById('prompter-scroll-box');
+            const icon = document.getElementById('scroll-icon');
+            const btnText = document.getElementById('scroll-btn-text');
+
+            if (isAutoScrolling) {
+                clearInterval(scrollInterval);
+                isAutoScrolling = false;
+                icon.className = "fa-solid fa-play";
+                btnText.innerText = "Cuộn tự động";
+            } else {
+                isAutoScrolling = true;
+                icon.className = "fa-solid fa-pause";
+                btnText.innerText = "Tạm dừng";
+
+                scrollInterval = setInterval(() => {
+                    box.scrollTop += scrollSpeed;
+                    if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
+                        toggleAutoScroll();
+                    }
+                }, 50);
+            }
+        }
+
+        function updateScrollSpeed() {
+            const speedInput = document.getElementById('scroll-speed');
+            scrollSpeed = parseInt(speedInput.value);
+            document.getElementById('speed-display').innerText = `${scrollSpeed}x`;
+        }
+
+        function toggleMirrorMode() {
+            const box = document.getElementById('prompter-scroll-box');
+            box.classList.toggle('mirror-mode');
+        }
+
+        function resetPrompterScroll() {
+            const box = document.getElementById('prompter-scroll-box');
+            box.scrollTop = 0;
+        }
+
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                document.body.className = "bg-slate-100 text-slate-800 min-h-screen flex flex-col transition-colors duration-300 antialiased overflow-x-hidden";
+                themeIcon.className = "fa-solid fa-sun text-amber-500";
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                document.body.className = "bg-darkbg text-slate-100 min-h-screen flex flex-col transition-colors duration-300 antialiased overflow-x-hidden";
+                themeIcon.className = "fa-solid fa-moon text-indigo-400";
+            }
+        }
+
+        // Keyboard Shortcuts & Touch Gestures
+        function setupKeyboardAndTouchListeners() {
+            window.addEventListener('keydown', (e) => {
+                if (viewMode !== 'card') return;
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                    e.preventDefault();
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    e.preventDefault();
+                    prevSlide();
+                }
+            });
+
+            // Touch Swipe Gestures
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const cardElem = document.getElementById('main-slide-card');
+
+            cardElem.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            cardElem.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            function handleSwipe() {
+                if (viewMode !== 'card') return;
+                const threshold = 50;
+                if (touchEndX < touchStartX - threshold) {
+                    nextSlide();
+                } else if (touchEndX > touchStartX + threshold) {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            updateSpeakerHeader();
+            updateTabStyles();
+            renderCurrentSlideCard();
+            setupKeyboardAndTouchListeners();
+        });
+    </script>
+</body>
+</html>
