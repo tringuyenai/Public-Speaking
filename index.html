@@ -3,34 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kịch Bản Lời Thoại Thuyết Trình</title>
+    <title>Kịch Bản Thuyết Trình Tinh Gọn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Lexend', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
-                        },
                         darkbg: '#090d16',
                         darkcard: '#131b2e',
-                        darkborder: '#1e293b'
                     }
                 }
             }
@@ -38,840 +24,1054 @@
     </script>
 
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
-        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; user-select: none; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.8); }
 
-        /* Custom Scrollbars */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.6);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(99, 102, 241, 0.4);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(99, 102, 241, 0.8);
-        }
-
-        .speech-text-sm { font-size: 1.125rem; line-height: 1.85rem; }
-        .speech-text-md { font-size: 1.5rem; line-height: 2.35rem; }
-        .speech-text-lg { font-size: 2rem; line-height: 3rem; }
-        .speech-text-xl { font-size: 2.5rem; line-height: 3.75rem; }
+        .speech-text-sm { font-size: 1.25rem; line-height: 2rem; }
+        .speech-text-md { font-size: 1.75rem; line-height: 2.75rem; }
+        .speech-text-lg { font-size: 2.25rem; line-height: 3.5rem; }
+        .speech-text-xl { font-size: 2.75rem; line-height: 4rem; }
 
         .teleprompter-line {
-            position: absolute;
-            top: 35%;
-            left: 0;
-            right: 0;
-            height: 30%;
-            border-top: 2px dashed rgba(239, 68, 68, 0.5);
-            border-bottom: 2px dashed rgba(239, 68, 68, 0.5);
-            pointer-events: none;
-            background: rgba(239, 68, 68, 0.03);
-            z-index: 10;
+            position: absolute; top: 35%; left: 0; right: 0; height: 30%;
+            border-top: 2px dashed rgba(239, 68, 68, 0.4);
+            border-bottom: 2px dashed rgba(239, 68, 68, 0.4);
+            pointer-events: none; background: rgba(239, 68, 68, 0.02); z-index: 10;
         }
-
-        .mirror-mode {
-            transform: scaleX(-1);
-        }
-
-        /* Smooth slide transitions */
-        .slide-enter {
-            animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .mirror-mode { transform: scaleX(-1); }
+        .slide-enter { animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; }
+        .light select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); }
     </style>
 </head>
 <body class="bg-darkbg text-slate-100 min-h-screen flex flex-col transition-colors duration-300 antialiased overflow-x-hidden">
 
-    <!-- Top Navigation Header -->
-    <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/90 backdrop-blur-md px-4 py-3">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-            
-            <!-- Left: Speaker Tab Switches -->
-            <div class="flex items-center space-x-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-                <button id="tab-cam" onclick="switchSpeaker('cam')" 
-                    class="tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm border border-transparent whitespace-nowrap active:scale-95">
-                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
-                    <span>Bài 1: Hồng Cẩm</span>
-                    <span class="text-xs opacity-75 font-normal hidden sm:inline">(Sports & Health)</span>
-                </button>
-
-                <button id="tab-dung" onclick="switchSpeaker('dung')" 
-                    class="tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm transition-all shadow-sm border border-transparent whitespace-nowrap active:scale-95">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                    <span>Bài 2: Ngọc Dung</span>
-                    <span class="text-xs opacity-75 font-normal hidden sm:inline">(Global Warming)</span>
-                </button>
-            </div>
-
-            <!-- Right: View Modes & Presenter Tools -->
-            <div class="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-end">
-                
-                <!-- View Mode Switcher -->
-                <div class="bg-slate-900/90 p-1 rounded-xl border border-slate-800 flex items-center space-x-1">
-                    <button id="mode-card-btn" onclick="setViewMode('card')" title="Chế độ Từng Slide"
-                        class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all">
-                        <i class="fa-solid fa-square-poll-vertical"></i>
-                        <span>Từng Slide</span>
-                    </button>
-                    <button id="mode-prompter-btn" onclick="setViewMode('prompter')" title="Chế độ Máy Đọc (Teleprompter)"
-                        class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all">
-                        <i class="fa-solid fa-scroll"></i>
-                        <span>Teleprompter</span>
-                    </button>
-                </div>
-
-                <!-- Font Size Controller -->
-                <div class="bg-slate-900/90 p-1 rounded-xl border border-slate-800 flex items-center space-x-1">
-                    <button onclick="changeFontSize(-1)" class="w-8 h-8 rounded-lg hover:bg-slate-800 text-xs font-bold transition flex items-center justify-center text-slate-300" title="Giảm cỡ chữ">A-</button>
-                    <span id="font-size-label" class="text-xs font-bold text-indigo-400 px-1">MD</span>
-                    <button onclick="changeFontSize(1)" class="w-8 h-8 rounded-lg hover:bg-slate-800 text-xs font-bold transition flex items-center justify-center text-slate-300" title="Tăng cỡ chữ">A+</button>
-                </div>
-
-                <!-- Stopwatch / Timer -->
-                <div class="flex items-center space-x-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl">
-                    <i class="fa-regular fa-clock text-indigo-400 text-xs"></i>
-                    <span id="timer-display" class="font-mono text-sm font-bold text-slate-200">00:00</span>
-                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="ml-1 text-slate-400 hover:text-emerald-400 transition text-xs">
-                        <i id="timer-icon" class="fa-solid fa-play"></i>
-                    </button>
-                    <button onclick="resetTimer()" class="text-slate-400 hover:text-amber-400 transition text-xs">
-                        <i class="fa-solid fa-rotate-left"></i>
-                    </button>
-                </div>
-
-                <!-- Theme Toggle Button -->
-                <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition">
-                    <i id="theme-icon" class="fa-solid fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-5 flex flex-col justify-between">
+    <main class="flex-1 w-full max-w-7xl mx-auto p-3 md:p-5 flex flex-col h-screen">
         
-        <!-- Presentation Meta Information Banner -->
-        <div id="speaker-info-card" class="mb-4 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800/80 shadow-lg flex flex-wrap items-center justify-between gap-3">
-            <div>
-                <div class="flex items-center space-x-2">
-                    <span id="speaker-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                        Diễn giả
-                    </span>
-                    <h1 id="speaker-name" class="text-lg font-bold text-white">
-                        Nguyễn Thị Hồng Cẩm
-                    </h1>
-                </div>
-                <p id="speaker-topic" class="text-xs text-slate-400 mt-1">
-                    Chủ đề: <span class="text-slate-200 font-medium">The Health Benefits of Sports</span>
-                </p>
-            </div>
-
-            <!-- Target Duration / Key Indicators -->
-            <div class="flex items-center space-x-3 text-xs">
-                <div class="bg-slate-950/60 border border-slate-800/80 px-3 py-1.5 rounded-xl flex items-center space-x-1.5">
-                    <i class="fa-solid fa-hourglass-half text-amber-400"></i>
-                    <span class="text-slate-400">Thời lượng:</span>
-                    <span id="target-duration" class="font-bold text-amber-300">~ 3.5 - 4 phút</span>
-                </div>
-                <div class="bg-slate-950/60 border border-slate-800/80 px-3 py-1.5 rounded-xl flex items-center space-x-1.5">
-                    <i class="fa-solid fa-layer-group text-indigo-400"></i>
-                    <span class="text-slate-400">Tổng slide:</span>
-                    <span id="total-slides-count" class="font-bold text-indigo-300">6 Slides</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide Thumbnails / Selector Navigation Bar -->
-        <div id="slide-selector-container" class="mb-5 overflow-x-auto pb-2 scrollbar-none">
-            <div id="slide-nav-pills" class="flex items-center space-x-2 min-w-max">
-                <!-- Dynamically generated slide selector buttons -->
-            </div>
-        </div>
-
-        <!-- VIEW 1: CARD MODE (Slide by Slide Focus) -->
-        <div id="card-view" class="flex-1 flex flex-col justify-between space-y-4">
+        <!-- Streamlined Control Panel -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3 mb-4 shadow-lg backdrop-blur-xl flex flex-col gap-3">
             
-            <!-- Active Slide Display Card -->
-            <div id="main-slide-card" class="slide-enter flex-1 bg-darkcard/90 border border-slate-800 rounded-2xl p-5 md:p-8 shadow-2xl flex flex-col justify-between relative overflow-hidden backdrop-blur-xl">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+                <!-- Speaker Tabs -->
+                <div class="flex items-center space-x-2 w-full md:w-auto bg-slate-950/50 p-1 rounded-xl">
+                    <button id="tab-cam" onclick="switchSpeaker('cam')" class="flex-1 md:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all active:scale-95 bg-indigo-600 text-white shadow-md">
+                        Hồng Cẩm
+                    </button>
+                    <button id="tab-dung" onclick="switchSpeaker('dung')" class="flex-1 md:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all active:scale-95 text-slate-400 hover:text-white hover:bg-slate-800">
+                        Ngọc Dung
+                    </button>
+                </div>
+
+                <!-- Topic Selector -->
+                <div class="w-full md:w-auto flex-1 max-w-md">
+                    <select id="topic-selector" onchange="changeTopic()" class="w-full bg-slate-800 border border-slate-700 text-slate-200 text-sm font-semibold rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 cursor-pointer transition-all">
+                        <option value="topic1">Topic 1: Plant-based diet</option>
+                        <option value="topic2">Topic 2: Benefits of sports</option>
+                        <option value="topic3">Topic 3: Technological advancement</option>
+                        <option value="topic4">Topic 4: Sustainable tourism</option>
+                        <option value="topic5">Topic 5: Learning foreign languages</option>
+                        <option value="topic6">Topic 6: Communication skills</option>
+                        <option value="topic7">Topic 7: Travel and perfect vacation</option>
+                        <option value="topic8">Topic 8: Challenges of online learning</option>
+                        <option value="topic9">Topic 9: Work-life balance</option>
+                        <option value="topic10">Topic 10: Global Warming</option>
+                        <option value="topic11">Topic 11: Social Media on Students</option>
+                        <option value="topic12">Topic 12: AI in Education</option>
+                        <option value="topic13">Topic 13: Time Management</option>
+                        <option value="topic14">Topic 14: Part-Time Jobs for Students</option>
+                        <option value="topic15">Topic 15: Social Media on Mental Health</option>
+                        <option value="topic16">Topic 16: Overcome Fear of Public Speaking</option>
+                        <option value="topic17">Topic 17: Online vs Traditional Learning</option>
+                        <option value="topic18">Topic 18: Learning English</option>
+                        <option value="topic19">Topic 19: Technology & Communication</option>
+                        <option value="topic20">Topic 20: Critical Thinking</option>
+                        <option value="topic21">Topic 21: Mandatory University Attendance</option>
+                        <option value="topic22">Topic 22: Influence of Influencers</option>
+                        <option value="topic23">Topic 23: Build Good Habits</option>
+                        <option value="topic24">Topic 24: Body Language</option>
+                        <option value="topic25">Topic 25: Climate Change Responsibility</option>
+                        <option value="topic26">Topic 26: Benefits of Traveling</option>
+                        <option value="topic27">Topic 27: Music & Productivity</option>
+                        <option value="topic28">Topic 28: Teamwork</option>
+                        <option value="topic29">Topic 29: Smartphones in Class</option>
+                        <option value="topic30">Topic 30: What Makes a Great Leader?</option>
+                    </select>
+                </div>
+
+                <!-- Tools -->
+                <div class="flex items-center space-x-2 w-full md:w-auto justify-center flex-wrap md:flex-nowrap">
+                    <!-- Nút Dịch Ngôn Ngữ -->
+                    <button id="lang-btn" onclick="toggleLang()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-900 shadow transition-all flex items-center">
+                        <i class="fa-solid fa-language mr-1"></i> <span id="lang-text">Dịch VN</span>
+                    </button>
+
+                    <div class="bg-slate-950/50 p-1 rounded-xl border border-slate-800 flex items-center">
+                        <button id="mode-card-btn" onclick="setViewMode('card')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow">Card</button>
+                        <button id="mode-prompter-btn" onclick="setViewMode('prompter')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white">Cuộn</button>
+                    </div>
+                    <div class="bg-slate-950/50 p-1 rounded-xl border border-slate-800 flex items-center space-x-1">
+                        <button onclick="changeFontSize(-1)" class="w-8 h-7 rounded text-xs font-bold text-slate-300 hover:bg-slate-700">A-</button>
+                        <button onclick="changeFontSize(1)" class="w-8 h-7 rounded text-xs font-bold text-slate-300 hover:bg-slate-700">A+</button>
+                    </div>
+                    <div class="bg-slate-950/50 p-1 rounded-xl border border-slate-800 flex items-center px-3 h-9 space-x-2 text-sm">
+                        <span id="timer-display" class="font-mono font-bold text-slate-200">00:00</span>
+                        <button onclick="toggleTimer()" class="text-emerald-400 hover:text-emerald-300 ml-2"><i id="timer-icon" class="fa-solid fa-play"></i></button>
+                        <button onclick="resetTimer()" class="text-amber-400 hover:text-amber-300"><i class="fa-solid fa-rotate-left"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="card-view" class="flex-1 flex flex-col justify-between overflow-hidden">
+            <div id="main-slide-card" class="slide-enter flex-1 bg-darkcard/80 border border-slate-800 rounded-2xl p-6 md:p-8 flex flex-col relative overflow-hidden">
                 
-                <!-- Slide Header Bar -->
-                <div class="flex flex-wrap items-center justify-between border-b border-slate-800/80 pb-4 mb-4 gap-2">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
                     <div class="flex items-center space-x-3">
-                        <span id="slide-number-tag" class="w-10 h-10 rounded-xl bg-indigo-600 text-white font-extrabold text-base flex items-center justify-center shadow-lg shadow-indigo-600/30">
-                            1
-                        </span>
+                        <span id="slide-number-tag" class="w-10 h-10 rounded-xl bg-indigo-600 text-white font-extrabold flex items-center justify-center text-lg">1</span>
                         <div>
-                            <span id="slide-badge-title" class="text-xs font-bold tracking-wider text-indigo-400 uppercase">
-                                SLIDE 1: TITLE SLIDE
-                            </span>
-                            <h2 id="slide-subtitle" class="text-sm font-semibold text-slate-300">
-                                Mở đầu & Giới thiệu bản thân
-                            </h2>
+                            <h2 id="slide-title" class="text-lg font-bold text-slate-200">Title Slide</h2>
+                            <p id="slide-subtitle" class="text-sm text-indigo-400 font-medium">Subtitle</p>
                         </div>
                     </div>
+                    <span id="slide-timing" class="text-xs font-semibold px-3 py-1 bg-slate-900 rounded-lg text-slate-400 border border-slate-800">~40s</span>
+                </div>
 
-                    <div class="flex items-center space-x-2">
-                        <span id="slide-timing-badge" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 flex items-center space-x-1">
-                            <i class="fa-regular fa-clock text-amber-400"></i>
-                            <span id="slide-time-estimate">~40s</span>
-                        </span>
-
-                        <button onclick="speakCurrentText()" id="tts-btn" class="px-3 py-1 rounded-lg text-xs font-semibold bg-indigo-900/40 hover:bg-indigo-800/60 text-indigo-300 border border-indigo-700/50 transition flex items-center space-x-1.5" title="Phát âm tiếng Anh đọc mẫu">
-                            <i class="fa-solid fa-volume-high"></i>
-                            <span class="hidden sm:inline">Nghe mẫu</span>
-                        </button>
+                <!-- Reading Area -->
+                <div class="flex-1 overflow-y-auto pr-2 pb-16">
+                    <div id="speech-content-box" class="space-y-4 select-text">
+                        <!-- Sentences go here -->
                     </div>
                 </div>
 
-                <!-- Slide Speech Text Area (The Core Cue Script) -->
-                <div class="my-auto py-4">
-                    <!-- Summary Card -->
-                    <div id="slide-summary-box" class="mb-4 p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs text-slate-300 flex items-start space-x-2">
-                        <i class="fa-solid fa-circle-info text-indigo-400 mt-0.5"></i>
-                        <div>
-                            <strong class="text-slate-200">Nội dung hiển thị trên Slide chiếu:</strong>
-                            <p id="slide-summary-text" class="text-slate-400 mt-0.5">Title, Specific Purpose Statement, Student Info</p>
-                        </div>
-                    </div>
-
-                    <!-- English Speech Sentences (One per line) -->
-                    <div class="relative">
-                        <div id="speech-content-box" class="space-y-3 select-text">
-                            <!-- Sentences dynamically generated here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide Navigation Footer Inside Card -->
-                <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                    <button id="prev-slide-btn" onclick="prevSlide()" 
-                        class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm transition flex items-center space-x-2 shadow-md disabled:opacity-30 disabled:cursor-not-allowed">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <span>Slide trước</span>
+                <!-- Slide Navigation Overlay -->
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-darkcard via-darkcard to-transparent border-t border-slate-800 flex items-center justify-between mt-auto">
+                    <button id="prev-slide-btn" onclick="prevSlide()" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm disabled:opacity-30">
+                        <i class="fa-solid fa-chevron-left mr-2"></i> Lùi lại
                     </button>
-
-                    <div id="slide-counter-indicator" class="text-xs font-bold text-slate-400">
-                        Trang <span id="current-slide-index" class="text-indigo-400 font-extrabold text-sm">1</span> / <span id="total-slides-indicator">6</span>
+                    <div class="text-sm font-bold text-slate-400">
+                        Slide <span id="current-slide-index" class="text-indigo-400 text-lg mx-1">1</span> / <span id="total-slides-indicator">6</span>
                     </div>
-
-                    <button id="next-slide-btn" onclick="nextSlide()" 
-                        class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition flex items-center space-x-2 shadow-lg shadow-indigo-600/30 disabled:opacity-30 disabled:cursor-not-allowed">
-                        <span>Slide tiếp</span>
-                        <i class="fa-solid fa-chevron-right"></i>
+                    <button id="next-slide-btn" onclick="nextSlide()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm disabled:opacity-30">
+                        Tiếp theo <i class="fa-solid fa-chevron-right ml-2"></i>
                     </button>
                 </div>
-            </div>
-
-            <!-- Quick Keyboard / Touch Gesture Hints -->
-            <div class="text-center text-xs text-slate-500 py-1 flex items-center justify-center space-x-4">
-                <span><kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300 font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300 font-mono">→</kbd> hoặc <kbd class="px-1.5 py-0.5 bg-slate-800 rounded border border-slate-700 text-slate-300 font-mono">Space</kbd> để chuyển slide</span>
-                <span class="hidden sm:inline">•</span>
-                <span class="hidden sm:inline">Vuốt trái/phải trên màn hình cảm ứng</span>
             </div>
         </div>
 
-        <!-- VIEW 2: TELEPROMPTER MODE (Continuous Scrolling) -->
-        <div id="prompter-view" class="hidden flex-1 flex-col space-y-3 relative">
-            
-            <!-- Prompter Controls Header Bar -->
-            <div class="bg-darkcard border border-slate-800 p-3 rounded-xl flex flex-wrap items-center justify-between gap-3 shadow-md">
-                <div class="flex items-center space-x-3">
-                    <button id="scroll-toggle-btn" onclick="toggleAutoScroll()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold flex items-center space-x-2 shadow">
-                        <i id="scroll-icon" class="fa-solid fa-play"></i>
-                        <span id="scroll-btn-text">Cuộn tự động</span>
-                    </button>
-
-                    <div class="flex items-center space-x-2 text-xs text-slate-300">
-                        <span>Tốc độ:</span>
-                        <input type="range" id="scroll-speed" min="1" max="10" value="3" oninput="updateScrollSpeed()" class="w-24 accent-indigo-500 cursor-pointer">
-                        <span id="speed-display" class="font-bold text-indigo-400">3x</span>
-                    </div>
+        <div id="prompter-view" class="hidden flex-1 flex-col relative overflow-hidden">
+            <div class="bg-darkcard border border-slate-800 p-2 rounded-xl mb-3 flex items-center justify-between">
+                <button onclick="toggleAutoScroll()" class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-bold flex items-center">
+                    <i id="scroll-icon" class="fa-solid fa-play mr-2"></i> <span id="scroll-btn-text">Cuộn tự động</span>
+                </button>
+                <div class="flex items-center space-x-2 text-sm text-slate-300">
+                    <span>Tốc độ:</span>
+                    <input type="range" id="scroll-speed" min="1" max="10" value="3" oninput="updateScrollSpeed()" class="w-24 accent-indigo-500">
                 </div>
-
-                <div class="flex items-center space-x-2">
-                    <button onclick="toggleMirrorMode()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 flex items-center space-x-1">
-                        <i class="fa-solid fa-arrows-left-right"></i>
-                        <span>Lật gương (Mirror)</span>
-                    </button>
-                    <button onclick="resetPrompterScroll()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium border border-slate-700 flex items-center space-x-1">
-                        <i class="fa-solid fa-arrow-up-to-line"></i>
-                        <span>Về đầu</span>
-                    </button>
-                </div>
+                <button onclick="toggleMirrorMode()" class="px-4 py-2 bg-slate-800 text-slate-200 rounded-lg text-sm font-bold">Lật gương</button>
             </div>
 
-            <!-- Prompter Text Container Window -->
-            <div class="relative flex-1 min-h-[500px] max-h-[70vh] rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden shadow-2xl">
-                <!-- Focal guide overlay line -->
+            <div class="relative flex-1 rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden">
                 <div class="teleprompter-line"></div>
-
-                <div id="prompter-scroll-box" class="h-full overflow-y-auto px-8 py-48 space-y-12 transition-all">
-                    <!-- Prompter script contents injected via JS -->
+                <div id="prompter-scroll-box" class="h-full overflow-y-auto px-6 md:px-12 py-[40vh] space-y-16">
+                    <!-- Script injected here -->
                 </div>
             </div>
         </div>
-
     </main>
 
     <script>
-        /* Speech Data Structure for Both Speakers */
-        const scriptsData = {
+        const db = {
             cam: {
-                name: "Nguyễn Thị Hồng Cẩm",
-                topic: "The Health Benefits of Sports",
-                targetTime: "~3.5 - 4 phút",
-                badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
-                slides: [
-                    {
-                        number: 1,
-                        title: "SLIDE 1: TITLE SLIDE",
-                        subtitle: "Mở đầu & Giới thiệu bản thân",
-                        summary: "Title, Specific Purpose Statement, Student Info",
-                        time: "~40s",
-                        text: [
-                            "Hello teacher and everyone.",
-                            "My name is Nguyễn Thị Hồng Cẩm.",
-                            "Today, I am very happy to share with you a very practical topic: The Health Benefits of Sports.",
-                            "My specific purpose today is to show you how playing sports improves our physical health, mental wellbeing, and essential life skills.",
-                            "Health is our most valuable treasure, and sports are the best key to unlock it!"
-                        ]
-                    },
-                    {
-                        number: 2,
-                        title: "SLIDE 2: OVERVIEW",
-                        subtitle: "Tổng quan bài thuyết trình",
-                        summary: "Overview (3 Main Parts: Physical Health, Mental Wellbeing, Social Skills)",
-                        time: "~30s",
-                        text: [
-                            "To make it easy to follow, my presentation has 3 main parts:",
-                            "First, Physical Health – how sports build a stronger body.",
-                            "Second, Mental Wellbeing – how sports bring us a happy mind.",
-                            "And third, Social Skills – how sports teach us valuable life lessons.",
-                            "Let’s start with the first point!"
-                        ]
-                    },
-                    {
-                        number: 3,
-                        title: "SLIDE 3: MAIN POINT 1",
-                        subtitle: "Sức khỏe thể chất (Physical Health)",
-                        summary: "Heart health, Strong bones/muscles, Weight control, Prevent diseases",
-                        time: "~45s",
-                        text: [
-                            "First, playing sports strongly improves your physical health.",
-                            "When you run, swim, or play football, your heart pumps faster and becomes stronger.",
-                            "It also builds strong bones and healthy muscles.",
-                            "Moreover, sports help you burn extra calories every day.",
-                            "This controls your weight and prevents many dangerous illnesses like diabetes or heart disease."
-                        ]
-                    },
-                    {
-                        number: 4,
-                        title: "SLIDE 4: MAIN POINT 2",
-                        subtitle: "Sức khỏe tinh thần (Mental Wellbeing)",
-                        summary: "Endorphins (happy hormones), Reduce stress, Better sleep, Memory",
-                        time: "~45s",
-                        text: [
-                            "Second, sports are a powerful booster for your mental health.",
-                            "After a long day of studying or working, exercising releases endorphins – the happy hormones in your brain.",
-                            "This quickly reduces stress and anxiety.",
-                            "Besides, playing sports helps you fall asleep faster and enjoy a deeper sleep at night.",
-                            "As a result, you will have better concentration and a sharper memory the next day."
-                        ]
-                    },
-                    {
-                        number: 5,
-                        title: "SLIDE 5: MAIN POINT 3",
-                        subtitle: "Kỹ năng sống & Xã hội (Social & Life Skills)",
-                        summary: "Teamwork, Communication, Lifelong friends, Self-discipline",
-                        time: "~45s",
-                        text: [
-                            "Third, sports develop essential life skills.",
-                            "In team sports like basketball or volleyball, you learn how to communicate, cooperate, and support your teammates.",
-                            "It is also a great way to make lifelong friends.",
-                            "Furthermore, regular practice builds strong self-discipline and confidence.",
-                            "It teaches you how to manage your time effectively between study and exercise."
-                        ]
-                    },
-                    {
-                        number: 6,
-                        title: "SLIDE 6: RECAP & CALL TO ACTION",
-                        subtitle: "Tóm tắt & Lời kêu gọi hành động",
-                        summary: "Strong body, Happy mind, 30 mins a day, Thank you",
-                        time: "~40s",
-                        text: [
-                            "To sum up, sports give us a strong body, a happy mind, and valuable life skills.",
-                            "You don't need to be a professional athlete.",
-                            "Just start small today!",
-                            "Spending only 30 minutes a day playing sports will truly change your life.",
-                            "Thank you very much for your time and listening!",
-                            "Wish you all good health!"
-                        ]
+                topic1: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello teacher and everyone.", "My name is Hong Cam.", "Today, I am very happy to share about an interesting topic.", "That is the benefits of a plant-based diet.", "My goal is to show you how good it is.", "Let's get started!"], 
+                      textVN: ["Chào thầy cô và mọi người.", "Tên em là Hồng Cẩm.", "Hôm nay, em rất vui được chia sẻ về một chủ đề thú vị.", "Đó là lợi ích của chế độ ăn thực vật.", "Mục tiêu của em là cho mọi người thấy nó tốt như thế nào.", "Hãy cùng bắt đầu nhé!"] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["To make it easy to follow, my speech has two main parts.", "Part one is about our physical health.", "Part two is about protecting the environment.", "Now, let's go to the first part."], 
+                      textVN: ["Để dễ theo dõi, bài nói của em có 2 phần chính.", "Phần một là về sức khỏe thể chất của chúng ta.", "Phần hai là về việc bảo vệ môi trường.", "Bây giờ, chúng ta hãy đi vào phần đầu tiên."] },
+                    { num: 3, title: "Body 1", sub: "Sức khỏe thể chất", time: "~50s", 
+                      textEN: ["First, eating plants makes your body very strong.", "Green vegetables and fruits have a lot of vitamins.", "When you eat them, you will not get sick easily.", "Meat is very hard to digest and makes you tired.", "But vegetables give you fast energy all day long."], 
+                      textVN: ["Đầu tiên, ăn thực vật làm cơ thể bạn rất khỏe.", "Rau xanh và trái cây có rất nhiều vitamin.", "Khi ăn chúng, bạn sẽ không dễ bị bệnh.", "Thịt thì rất khó tiêu hóa và làm bạn mệt mỏi.", "Nhưng rau củ cho bạn năng lượng nhanh chóng cả ngày."] },
+                    { num: 4, title: "Body 2", sub: "Bảo vệ môi trường", time: "~50s", 
+                      textEN: ["Second, this diet helps protect the Earth.", "Raising cows and pigs wastes a lot of clean water.", "Farms also create a lot of dirty garbage.", "When we eat vegetables, we keep the air and water clean.", "This is the best way to save our beautiful planet."], 
+                      textVN: ["Thứ hai, chế độ ăn này giúp bảo vệ Trái đất.", "Nuôi bò và lợn tốn rất nhiều nước sạch.", "Các trang trại cũng tạo ra nhiều rác bẩn.", "Khi chúng ta ăn rau, chúng ta giữ cho không khí và nước trong lành.", "Đây là cách tốt nhất để cứu hành tinh xinh đẹp của chúng ta."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In conclusion, eating plants brings a strong body and a clean environment.", "You do not need to stop eating meat immediately.", "You just need to eat more vegetables every day.", "Your small action will create a big result.", "Thank you everyone for listening to my speech."], 
+                      textVN: ["Tóm lại, ăn thực vật mang lại cơ thể khỏe và môi trường sạch.", "Bạn không cần phải ngừng ăn thịt ngay lập tức.", "Bạn chỉ cần ăn nhiều rau hơn mỗi ngày.", "Hành động nhỏ của bạn sẽ tạo ra kết quả lớn.", "Cảm ơn mọi người đã lắng nghe bài của em."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] Is it hard to eat only plants?", "-> Answer: Yes, at first. But you can start slowly, like 2 days a week.",
+                          "[CÂU HỎI 2] What is your favorite vegetable?", "-> Answer: I like broccoli because it is delicious and easy to cook.",
+                          "[CÂU HỎI 3] Do you lack protein?", "-> Answer: No, I get protein from tofu and beans.",
+                          "[CÂU HỎI 4] Is this diet expensive?", "-> Answer: No, vegetables are much cheaper than meat in Vietnam.",
+                          "[CÂU HỎI 5] How do you feel after eating plants?", "-> Answer: I feel very light and I have a lot of energy.",
+                          "[CÂU HỎI 6] Do you force your friends to eat plants?", "-> Answer: No, I just share the benefits. They choose for themselves.",
+                          "[CÂU HỎI 7] What do you eat for breakfast?", "-> Answer: I often eat sweet potatoes or corn for breakfast.",
+                          "[CÂU HỎI 8] Can athletes eat a plant-based diet?", "-> Answer: Yes, many famous athletes only eat plants to stay fit.",
+                          "[CÂU HỎI 9] Do you drink milk?", "-> Answer: I drink nut milk, like soy milk or almond milk.",
+                          "[CÂU HỎI 10] What is your advice for beginners?", "-> Answer: My advice is to eat what you like and drink a lot of water."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Chỉ ăn thực vật có khó không?", "-> Trả lời: Có, lúc đầu. Nhưng bạn có thể bắt đầu từ từ, như 2 ngày 1 tuần.",
+                          "[CÂU HỎI 2] Loại rau yêu thích của bạn là gì?", "-> Trả lời: Tôi thích súp lơ xanh vì nó ngon và dễ nấu.",
+                          "[CÂU HỎI 3] Bạn có bị thiếu đạm (protein) không?", "-> Trả lời: Không, tôi lấy đạm từ đậu hũ và các loại đậu.",
+                          "[CÂU HỎI 4] Chế độ ăn này có đắt không?", "-> Trả lời: Không, rau củ rẻ hơn thịt rất nhiều ở Việt Nam.",
+                          "[CÂU HỎI 5] Bạn cảm thấy thế nào sau khi ăn thực vật?", "-> Trả lời: Tôi thấy rất nhẹ nhàng và có nhiều năng lượng.",
+                          "[CÂU HỎI 6] Bạn có ép bạn bè ăn thực vật không?", "-> Trả lời: Không, tôi chỉ chia sẻ lợi ích. Họ tự chọn.",
+                          "[CÂU HỎI 7] Bạn ăn gì vào buổi sáng?", "-> Trả lời: Tôi thường ăn khoai lang hoặc bắp vào buổi sáng.",
+                          "[CÂU HỎI 8] Vận động viên có thể ăn thực vật không?", "-> Trả lời: Có, nhiều VĐV nổi tiếng chỉ ăn thực vật để giữ dáng.",
+                          "[CÂU HỎI 9] Bạn có uống sữa không?", "-> Trả lời: Tôi uống sữa hạt, như sữa đậu nành hoặc sữa hạnh nhân.",
+                          "[CÂU HỎI 10] Lời khuyên của bạn cho người mới bắt đầu là gì?", "-> Trả lời: Lời khuyên của tôi là hãy ăn món bạn thích và uống nhiều nước."
+                      ] 
+                    }
+                ],
+                topic2: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello everyone.", "My name is Hong Cam.", "Today, I want to discuss the benefits of sports.", "Health is gold.", "And sports are the best way to stay healthy.", "I will prove that to you right now."], 
+                      textVN: ["Chào mọi người.", "Tên em là Hồng Cẩm.", "Hôm nay, em muốn thảo luận về lợi ích của thể thao.", "Sức khỏe là vàng.", "Và thể thao là cách tốt nhất để giữ sức khỏe.", "Em sẽ chứng minh điều đó cho mọi người ngay bây giờ."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My presentation is divided into two main parts.", "The first part is about physical benefits.", "The second part is about mental benefits.", "Let's look at part one."], 
+                      textVN: ["Bài thuyết trình của em được chia thành 2 phần chính.", "Phần đầu tiên là về lợi ích thể chất.", "Phần thứ hai là về lợi ích tinh thần.", "Hãy cùng xem phần một."] },
+                    { num: 3, title: "Body 1", sub: "Cơ thể khỏe mạnh", time: "~50s", 
+                      textEN: ["First, sports build a great body.", "When you run or swim, your heart beats faster and stronger.", "It also helps you burn extra calories.", "So, you will not get fat.", "Your muscles and bones also become very tough."], 
+                      textVN: ["Đầu tiên, thể thao xây dựng một cơ thể tuyệt vời.", "Khi bạn chạy hoặc bơi, tim bạn đập nhanh và khỏe hơn.", "Nó cũng giúp bạn đốt cháy calo thừa.", "Vì vậy, bạn sẽ không bị béo.", "Cơ bắp và xương của bạn cũng trở nên rất cứng cáp."] },
+                    { num: 4, title: "Body 2", sub: "Não bộ hạnh phúc", time: "~50s", 
+                      textEN: ["Second, sports are the best medicine for the brain.", "After studying hard, playing sports helps you release stress.", "Your brain will release happy hormones.", "At night, you will sleep very well and deeply.", "The next day, you will study with more focus."], 
+                      textVN: ["Thứ hai, thể thao là liều thuốc tốt nhất cho não bộ.", "Sau khi học tập vất vả, chơi thể thao giúp bạn hết căng thẳng.", "Não bạn sẽ tiết ra hormone hạnh phúc.", "Buổi tối, bạn sẽ ngủ rất ngon và sâu.", "Ngày hôm sau, bạn sẽ học tập tập trung hơn."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In short, sports give us strength and joy.", "Every day, you only need to spend thirty minutes.", "Choose a sport you like and start today.", "Your life will change for the better.", "Thank you teacher and friends for listening."], 
+                      textVN: ["Tóm lại, thể thao cho chúng ta sức mạnh và niềm vui.", "Mỗi ngày, bạn chỉ cần bỏ ra 30 phút.", "Hãy chọn một môn thể thao bạn thích và bắt đầu ngay hôm nay.", "Cuộc sống của bạn sẽ thay đổi tốt hơn.", "Cảm ơn thầy cô và các bạn đã lắng nghe."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] What is your favorite sport?", "-> Answer: I like playing badminton with my friends.",
+                          "[CÂU HỎI 2] How often do you play sports?", "-> Answer: I play sports about three times a week.",
+                          "[CÂU HỎI 3] Do you play in the morning or afternoon?", "-> Answer: I usually play in the afternoon after school.",
+                          "[CÂU HỎI 4] Do you prefer playing alone or in a team?", "-> Answer: I prefer a team because it is more fun.",
+                          "[CÂU HỎI 5] Have you ever been injured?", "-> Answer: Yes, my leg hurt once when I ran too fast.",
+                          "[CÂU HỎI 6] What is the best sport for losing weight?", "-> Answer: I think running is the best and cheapest way.",
+                          "[CÂU HỎI 7] Is it expensive to play sports?", "-> Answer: No, running in the park is completely free.",
+                          "[CÂU HỎI 8] Do you watch sports on TV?", "-> Answer: Yes, I sometimes watch football with my father.",
+                          "[CÂU HỎI 9] How to not give up when playing sports?", "-> Answer: You should play with a friend to stay motivated.",
+                          "[CÂU HỎI 10] Do you drink water during practice?", "-> Answer: Yes, drinking water is very important to not get tired."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Môn thể thao yêu thích của bạn là gì?", "-> Trả lời: Tôi thích chơi cầu lông với bạn bè.",
+                          "[CÂU HỎI 2] Bạn chơi thể thao thường xuyên không?", "-> Trả lời: Tôi chơi thể thao khoảng 3 lần một tuần.",
+                          "[CÂU HỎI 3] Bạn chơi buổi sáng hay buổi chiều?", "-> Trả lời: Tôi thường chơi vào buổi chiều sau giờ học.",
+                          "[CÂU HỎI 4] Bạn thích chơi một mình hay theo nhóm?", "-> Trả lời: Tôi thích nhóm hơn vì nó vui hơn.",
+                          "[CÂU HỎI 5] Bạn đã bao giờ bị thương chưa?", "-> Trả lời: Rồi, chân tôi từng bị đau một lần khi chạy quá nhanh.",
+                          "[CÂU HỎI 6] Môn thể thao tốt nhất để giảm cân là gì?", "-> Trả lời: Tôi nghĩ chạy bộ là cách tốt nhất và rẻ nhất.",
+                          "[CÂU HỎI 7] Chơi thể thao có đắt đỏ không?", "-> Trả lời: Không, chạy bộ trong công viên là hoàn toàn miễn phí.",
+                          "[CÂU HỎI 8] Bạn có xem thể thao trên TV không?", "-> Trả lời: Có, thỉnh thoảng tôi xem bóng đá với bố.",
+                          "[CÂU HỎI 9] Làm sao để không bỏ cuộc khi tập thể thao?", "-> Trả lời: Bạn nên chơi với một người bạn để có động lực.",
+                          "[CÂU HỎI 10] Bạn có uống nước khi tập không?", "-> Trả lời: Có, uống nước rất quan trọng để không bị mệt."
+                      ] 
+                    }
+                ],
+                topic3: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello teacher.", "My name is Hong Cam.", "My topic today is the effects of technological advancement.", "Technology is everywhere around us now.", "It changes how we live and study.", "I will talk about both sides of it."], 
+                      textVN: ["Chào thầy cô.", "Tên em là Hồng Cẩm.", "Chủ đề của em hôm nay là tác động của tiến bộ công nghệ.", "Công nghệ hiện đang ở khắp mọi nơi quanh ta.", "Nó thay đổi cách chúng ta sống và học tập.", "Em sẽ nói về cả 2 mặt của nó."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My presentation has two main parts.", "First, I will talk about the good effects on education.", "Second, I will discuss the bad effects on our health.", "Let's explore the first part."], 
+                      textVN: ["Bài trình bày của em có 2 phần chính.", "Đầu tiên, em sẽ nói về tác động tốt lên giáo dục.", "Thứ hai, em sẽ thảo luận tác động xấu lên sức khỏe.", "Hãy cùng khám phá phần đầu."] },
+                    { num: 3, title: "Body 1", sub: "Tác động tốt (Học tập)", time: "~50s", 
+                      textEN: ["First, technology makes learning very easy and fast.", "We can find any information on Google in one second.", "We can study online at home without going out.", "We also use smart apps to translate languages.", "It saves us a lot of time and money."], 
+                      textVN: ["Đầu tiên, công nghệ làm việc học rất dễ và nhanh.", "Chúng ta có thể tìm mọi thông tin trên Google trong 1 giây.", "Chúng ta có thể học online ở nhà mà không cần ra ngoài.", "Chúng ta cũng dùng các app thông minh để dịch ngôn ngữ.", "Nó tiết kiệm cho ta rất nhiều thời gian và tiền bạc."] },
+                    { num: 4, title: "Body 2", sub: "Tác động xấu (Sức khỏe)", time: "~50s", 
+                      textEN: ["But second, it brings bad effects to our bodies.", "People look at their phone screens too much.", "This makes our eyes tired and weak.", "Also, because we just sit and play games, we become lazy.", "Many young people do not want to do sports anymore."], 
+                      textVN: ["Nhưng thứ hai, nó mang lại tác động xấu cho cơ thể.", "Mọi người nhìn vào màn hình điện thoại quá nhiều.", "Điều này làm mắt chúng ta mệt và yếu.", "Ngoài ra, vì ta chỉ ngồi chơi game, ta trở nên lười biếng.", "Nhiều người trẻ không muốn tập thể thao nữa."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In conclusion, technology is a very useful tool.", "But it can be dangerous if we use it too much.", "We must control our screen time smartly.", "Do not let the phone control your life.", "Thank you for your time."], 
+                      textVN: ["Tóm lại, công nghệ là một công cụ rất hữu ích.", "Nhưng nó có thể nguy hiểm nếu ta dùng quá nhiều.", "Chúng ta phải kiểm soát thời gian dùng màn hình thật thông minh.", "Đừng để điện thoại kiểm soát cuộc sống của bạn.", "Cảm ơn vì thời gian của thầy cô."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] How many hours do you use your phone daily?", "-> Answer: I use it about 4 hours a day.",
+                          "[CÂU HỎI 2] Can you live without a smartphone?", "-> Answer: No, I really need it to study and call my mom.",
+                          "[CÂU HỎI 3] What is your favorite app?", "-> Answer: I like YouTube because I can learn English there.",
+                          "[CÂU HỎI 4] Do you think AI will replace teachers?", "-> Answer: No, teachers have emotions, AI does not.",
+                          "[CÂU HỎI 5] How to protect your eyes?", "-> Answer: I try to look at green trees after using the phone.",
+                          "[CÂU HỎI 6] Do you play mobile games?", "-> Answer: Yes, but only 30 minutes on weekends.",
+                          "[CÂU HỎI 7] Is social media good or bad?", "-> Answer: It is good if we use it to talk to friends.",
+                          "[CÂU HỎI 8] Do you read paper books or e-books?", "-> Answer: I still prefer paper books. They smell good.",
+                          "[CÂU HỎI 9] Do old people like technology?", "-> Answer: My grandparents find it hard to use smartphones.",
+                          "[CÂU HỎI 10] What is the best invention in your opinion?", "-> Answer: I think the Internet is the greatest invention."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Bạn dùng điện thoại mấy tiếng mỗi ngày?", "-> Trả lời: Tôi dùng khoảng 4 tiếng một ngày.",
+                          "[CÂU HỎI 2] Bạn có thể sống thiếu smartphone không?", "-> Trả lời: Không, tôi thực sự cần nó để học và gọi mẹ.",
+                          "[CÂU HỎI 3] Ứng dụng yêu thích của bạn là gì?", "-> Trả lời: Tôi thích YouTube vì tôi có thể học tiếng Anh ở đó.",
+                          "[CÂU HỎI 4] Bạn có nghĩ AI sẽ thay thế giáo viên không?", "-> Trả lời: Không, giáo viên có cảm xúc, AI thì không.",
+                          "[CÂU HỎI 5] Làm sao để bảo vệ mắt?", "-> Trả lời: Tôi cố gắng nhìn vào cây xanh sau khi dùng điện thoại.",
+                          "[CÂU HỎI 6] Bạn có chơi game di động không?", "-> Trả lời: Có, nhưng chỉ 30 phút vào cuối tuần.",
+                          "[CÂU HỎI 7] Mạng xã hội tốt hay xấu?", "-> Trả lời: Nó tốt nếu ta dùng để nói chuyện với bạn bè.",
+                          "[CÂU HỎI 8] Bạn đọc sách giấy hay sách điện tử?", "-> Trả lời: Tôi vẫn thích sách giấy hơn. Chúng có mùi thơm.",
+                          "[CÂU HỎI 9] Người già có thích công nghệ không?", "-> Trả lời: Ông bà tôi thấy rất khó để dùng smartphone.",
+                          "[CÂU HỎI 10] Phát minh tốt nhất theo ý bạn là gì?", "-> Trả lời: Tôi nghĩ Internet là phát minh vĩ đại nhất."
+                      ] 
+                    }
+                ],
+                topic4: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello everyone.", "My name is Hong Cam.", "Today I will talk about sustainable tourism.", "This means traveling without destroying nature.", "It is a very hot topic right now.", "I will show you why we need it."], 
+                      textVN: ["Chào mọi người.", "Tên em là Hồng Cẩm.", "Hôm nay em sẽ nói về du lịch bền vững.", "Điều này có nghĩa là đi du lịch không phá hủy thiên nhiên.", "Đây là một chủ đề rất nóng hiện nay.", "Em sẽ cho mọi người thấy tại sao ta cần nó."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My speech is divided into two parts.", "First, I will talk about protecting the environment.", "Second, I will discuss helping local people.", "Let's begin with the environment."], 
+                      textVN: ["Bài nói của em được chia làm 2 phần.", "Đầu tiên, em sẽ nói về bảo vệ môi trường.", "Thứ hai, em sẽ thảo luận việc giúp đỡ người dân địa phương.", "Hãy bắt đầu với môi trường."] },
+                    { num: 3, title: "Body 1", sub: "Bảo vệ môi trường", time: "~50s", 
+                      textEN: ["First, sustainable tourism protects nature.", "Good tourists do not throw rubbish on the beach.", "They do not cut trees or kill wild animals.", "They use bicycles instead of cars to reduce smoke.", "This keeps beautiful places clean for our children forever."], 
+                      textVN: ["Đầu tiên, du lịch bền vững bảo vệ thiên nhiên.", "Du khách tốt không vứt rác trên bãi biển.", "Họ không chặt cây hay giết động vật hoang dã.", "Họ dùng xe đạp thay vì ô tô để giảm khói.", "Điều này giữ các nơi đẹp sạch sẽ cho con cháu ta mãi mãi."] },
+                    { num: 4, title: "Body 2", sub: "Giúp người dân", time: "~50s", 
+                      textEN: ["Second, it really helps the local people.", "When we visit a village, we should buy their local food.", "We can buy handmade gifts to support them.", "This gives poor people jobs and money to live.", "We help them build a better life."], 
+                      textVN: ["Thứ hai, nó thực sự giúp người dân địa phương.", "Khi ta thăm một ngôi làng, ta nên mua đồ ăn địa phương của họ.", "Ta có thể mua quà thủ công để ủng hộ họ.", "Việc này cho người nghèo công việc và tiền để sống.", "Chúng ta giúp họ xây dựng cuộc sống tốt hơn."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In conclusion, sustainable tourism is a win-win choice.", "It saves the Earth and helps people out of poverty.", "We should all learn to be responsible tourists.", "Bring your own water bottle on your next trip.", "Thank you for listening."], 
+                      textVN: ["Tóm lại, du lịch bền vững là lựa chọn đôi bên cùng có lợi.", "Nó cứu Trái đất và giúp con người thoát nghèo.", "Tất cả ta nên học làm du khách có trách nhiệm.", "Hãy mang bình nước riêng trong chuyến đi tới.", "Cảm ơn đã lắng nghe."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] Give an example of sustainable tourism?", "-> Answer: It is refusing to use plastic bags when traveling.",
+                          "[CÂU HỎI 2] Do you like eco-tourism?", "-> Answer: Yes, because I love seeing green forests.",
+                          "[CÂU HỎI 3] Is sustainable travel expensive?", "-> Answer: Sometimes, but riding a bicycle is very cheap.",
+                          "[CÂU HỎI 4] What do you always pack in your bag?", "-> Answer: I always pack a personal water bottle.",
+                          "[CÂU HỎI 5] Where is a good eco-place in Vietnam?", "-> Answer: I think the Mekong Delta is great for eco-tourism.",
+                          "[CÂU HỎI 6] How to help local people?", "-> Answer: Eat at their small restaurants, not big fast-food chains.",
+                          "[CÂU HỎI 7] Do you buy souvenirs?", "-> Answer: Yes, I buy local handmade bags.",
+                          "[CÂU HỎI 8] Should we ride elephants?", "-> Answer: No, it hurts the animals.",
+                          "[CÂU HỎI 9] How do you travel?", "-> Answer: I prefer taking the train, it is better for the air.",
+                          "[CÂU HỎI 10] Do young people care about this?", "-> Answer: Yes, young people today love protecting nature."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Cho một ví dụ về du lịch bền vững?", "-> Trả lời: Đó là từ chối dùng túi nilon khi đi du lịch.",
+                          "[CÂU HỎI 2] Bạn có thích du lịch sinh thái không?", "-> Trả lời: Có, vì tôi yêu việc ngắm nhìn rừng xanh.",
+                          "[CÂU HỎI 3] Du lịch bền vững có đắt không?", "-> Trả lời: Đôi khi, nhưng đi xe đạp thì rất rẻ.",
+                          "[CÂU HỎI 4] Bạn luôn mang gì trong balo?", "-> Trả lời: Tôi luôn mang một bình nước cá nhân.",
+                          "[CÂU HỎI 5] Nơi sinh thái nào tốt ở Việt Nam?", "-> Trả lời: Tôi nghĩ Đồng bằng sông Cửu Long rất tuyệt cho du lịch sinh thái.",
+                          "[CÂU HỎI 6] Làm sao để giúp người dân địa phương?", "-> Trả lời: Ăn ở nhà hàng nhỏ của họ, đừng ăn ở chuỗi đồ ăn nhanh lớn.",
+                          "[CÂU HỎI 7] Bạn có mua quà lưu niệm không?", "-> Trả lời: Có, tôi mua túi thủ công địa phương.",
+                          "[CÂU HỎI 8] Ta có nên cưỡi voi không?", "-> Trả lời: Không, việc đó làm tổn thương động vật.",
+                          "[CÂU HỎI 9] Bạn di chuyển thế nào?", "-> Trả lời: Tôi thích đi tàu hỏa, nó tốt hơn cho không khí.",
+                          "[CÂU HỎI 10] Người trẻ có quan tâm điều này không?", "-> Trả lời: Có, người trẻ ngày nay rất thích bảo vệ thiên nhiên."
+                      ] 
+                    }
+                ],
+                topic5: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello teacher and friends.", "My name is Hong Cam.", "Today, I will talk about learning foreign languages.", "Knowing another language is a huge advantage today.", "It can totally change your life.", "I will explain why it is so important."], 
+                      textVN: ["Chào thầy cô và các bạn.", "Tên em là Hồng Cẩm.", "Hôm nay, em sẽ nói về việc học ngoại ngữ.", "Biết một ngôn ngữ khác là một lợi thế khổng lồ ngày nay.", "Nó có thể thay đổi hoàn toàn cuộc sống của bạn.", "Em sẽ giải thích tại sao nó lại quan trọng như vậy."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My presentation has two simple parts.", "First, I will talk about getting a good job.", "Second, I will talk about traveling and making friends.", "Let's move to the first point."], 
+                      textVN: ["Bài thuyết trình của em có 2 phần đơn giản.", "Đầu tiên, em sẽ nói về việc có một công việc tốt.", "Thứ hai, em sẽ nói về đi du lịch và kết bạn.", "Hãy chuyển sang ý đầu tiên."] },
+                    { num: 3, title: "Body 1", sub: "Công việc tốt", time: "~50s", 
+                      textEN: ["First, it helps you get a very good job.", "Today, many big companies want workers who speak English.", "If you can communicate well, you will have a high salary.", "You can even work in America or Europe.", "It makes your career path very bright."], 
+                      textVN: ["Đầu tiên, nó giúp bạn có một công việc rất tốt.", "Ngày nay, nhiều công ty lớn muốn nhân viên nói tiếng Anh.", "Nếu bạn giao tiếp tốt, bạn sẽ có lương cao.", "Bạn thậm chí có thể làm việc ở Mỹ hoặc Châu Âu.", "Nó làm cho con đường sự nghiệp của bạn rất xán lạn."] },
+                    { num: 4, title: "Body 2", sub: "Du lịch & Kết bạn", time: "~50s", 
+                      textEN: ["Second, language is a great key for traveling.", "You will not get lost if you can speak their language.", "You can order food and buy tickets easily.", "Also, you can make new friends from all over the world.", "It makes your trip so much more fun."], 
+                      textVN: ["Thứ hai, ngôn ngữ là chìa khóa tuyệt vời để đi du lịch.", "Bạn sẽ không bị lạc nếu có thể nói ngôn ngữ của họ.", "Bạn có thể gọi món và mua vé dễ dàng.", "Ngoài ra, bạn có thể kết bạn mới từ khắp nơi trên thế giới.", "Nó làm chuyến đi của bạn vui hơn rất nhiều."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In conclusion, learning a new language opens many big doors.", "It brings good money and wonderful travels.", "It is hard, but it is worth it.", "Let's start learning a language today.", "Thank you very much."], 
+                      textVN: ["Tóm lại, học ngôn ngữ mới mở ra nhiều cánh cửa lớn.", "Nó mang lại tiền bạc tốt và những chuyến đi tuyệt vời.", "Nó khó, nhưng nó xứng đáng.", "Hãy bắt đầu học một ngôn ngữ ngay hôm nay.", "Cảm ơn rất nhiều."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] Besides English, what language do you want to learn?", "-> Answer: I want to learn Chinese because it is very popular.",
+                          "[CÂU HỎI 2] Is learning English hard?", "-> Answer: Yes, the grammar is a bit difficult for me.",
+                          "[CÂU HỎI 3] How do you practice speaking?", "-> Answer: I talk to myself in front of the mirror.",
+                          "[CÂU HỎI 4] Do you watch movies to learn?", "-> Answer: Yes, I watch American movies with subtitles.",
+                          "[CÂU HỎI 5] Are apps like Duolingo good?", "-> Answer: Yes, they are fun and easy to use.",
+                          "[CÂU HỎI 6] What is the most difficult skill?", "-> Answer: Speaking is the hardest because I feel shy.",
+                          "[CÂU HỎI 7] Do you have any foreign friends?", "-> Answer: I have a friend from Australia online.",
+                          "[CÂU HỎI 8] Do you listen to English music?", "-> Answer: Yes, I love listening to Taylor Swift.",
+                          "[CÂU HỎI 9] Is vocabulary important?", "-> Answer: Yes, without vocabulary we cannot say anything.",
+                          "[CÂU HỎI 10] How many hours do you study English?", "-> Answer: I study about 1 hour every evening."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Ngoài tiếng Anh, bạn muốn học tiếng gì?", "-> Trả lời: Tôi muốn học tiếng Trung vì nó rất phổ biến.",
+                          "[CÂU HỎI 2] Học tiếng Anh có khó không?", "-> Trả lời: Có, ngữ pháp hơi khó đối với tôi.",
+                          "[CÂU HỎI 3] Bạn luyện nói thế nào?", "-> Trả lời: Tôi tự nói chuyện trước gương.",
+                          "[CÂU HỎI 4] Bạn có xem phim để học không?", "-> Trả lời: Có, tôi xem phim Mỹ có phụ đề.",
+                          "[CÂU HỎI 5] Các app như Duolingo có tốt không?", "-> Trả lời: Có, chúng rất vui và dễ dùng.",
+                          "[CÂU HỎI 6] Kỹ năng nào khó nhất?", "-> Trả lời: Nói là khó nhất vì tôi hay ngại.",
+                          "[CÂU HỎI 7] Bạn có bạn người nước ngoài nào không?", "-> Trả lời: Tôi có một người bạn từ Úc trên mạng.",
+                          "[CÂU HỎI 8] Bạn có nghe nhạc tiếng Anh không?", "-> Trả lời: Có, tôi rất thích nghe nhạc Taylor Swift.",
+                          "[CÂU HỎI 9] Từ vựng có quan trọng không?", "-> Trả lời: Có, không có từ vựng ta không thể nói gì cả.",
+                          "[CÂU HỎI 10] Bạn học tiếng Anh mấy tiếng?", "-> Trả lời: Tôi học khoảng 1 tiếng mỗi tối."
+                      ] 
+                    }
+                ],
+                topic6: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello everyone.", "Today I will talk about communication skills.", "It is the key to society.", "I will explain how it builds trust and leadership."], 
+                      textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về kỹ năng giao tiếp.", "Nó là chìa khóa của xã hội.", "Tôi sẽ giải thích nó xây dựng niềm tin và sự lãnh đạo ra sao."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My presentation has two parts.", "First, I will talk about building trust.", "Second, I will discuss leadership.", "Let's begin."], 
+                      textVN: ["Bài trình bày của tôi có 2 phần.", "Đầu tiên, tôi sẽ nói về việc xây dựng niềm tin.", "Thứ hai, tôi sẽ thảo luận về sự lãnh đạo.", "Hãy bắt đầu."] },
+                    { num: 3, title: "Body 1", sub: "Xây dựng niềm tin", time: "~50s", 
+                      textEN: ["First, good communication builds trust.", "If you are honest and polite, people will believe you.", "Trust is very important in business.", "Customers will buy your products."], 
+                      textVN: ["Đầu tiên, giao tiếp tốt xây dựng niềm tin.", "Nếu bạn trung thực và lịch sự, mọi người sẽ tin bạn.", "Niềm tin rất quan trọng trong kinh doanh.", "Khách hàng sẽ mua sản phẩm của bạn."] },
+                    { num: 4, title: "Body 2", sub: "Kỹ năng lãnh đạo", time: "~50s", 
+                      textEN: ["Second, it shows your leadership.", "A good leader must talk confidently in front of the crowd.", "They explain the goals clearly.", "So the team knows what to do."], 
+                      textVN: ["Thứ hai, nó thể hiện sự lãnh đạo của bạn.", "Lãnh đạo tốt phải nói tự tin trước đám đông.", "Họ giải thích mục tiêu rõ ràng.", "Để nhóm biết phải làm gì."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["To sum up, speaking well brings trust and leadership.", "It is the most important soft skill.", "Read more books to speak better.", "Thank you."], 
+                      textVN: ["Tóm lại, nói hay mang lại niềm tin và sự lãnh đạo.", "Nó là kỹ năng mềm quan trọng nhất.", "Hãy đọc nhiều sách hơn để nói tốt hơn.", "Cảm ơn."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] Are you a good communicator?", "-> Answer: I am still learning, but I am getting better.",
+                          "[CÂU HỎI 2] Why are some people shy?", "-> Answer: Because they are afraid of making mistakes.",
+                          "[CÂU HỎI 3] How to be less shy?", "-> Answer: Practice speaking in front of a mirror.",
+                          "[CÂU HỎI 4] Is listening important?", "-> Answer: Yes, listening is half of communication.",
+                          "[CÂU HỎI 5] Do you like talking to strangers?", "-> Answer: Sometimes, it helps me learn new things.",
+                          "[CÂU HỎI 6] Does body language matter?", "-> Answer: Yes, it shows how confident you are.",
+                          "[CÂU HỎI 7] How do you communicate with friends?", "-> Answer: I talk to them nicely and honestly.",
+                          "[CÂU HỎI 8] Can you learn communication?", "-> Answer: Yes, you can read books and practice.",
+                          "[CÂU HỎI 9] Is speaking English hard?", "-> Answer: Yes, but it is fun to learn.",
+                          "[CÂU HỎI 10] Who is a great speaker?", "-> Answer: I think Barack Obama is a great speaker."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Bạn có phải người giao tiếp tốt không?", "-> Trả lời: Tôi vẫn đang học, nhưng tôi đang tốt lên.",
+                          "[CÂU HỎI 2] Sao vài người lại nhút nhát?", "-> Trả lời: Vì họ sợ mắc lỗi.",
+                          "[CÂU HỎI 3] Làm sao bớt nhút nhát?", "-> Trả lời: Luyện tập nói trước gương.",
+                          "[CÂU HỎI 4] Lắng nghe có quan trọng không?", "-> Trả lời: Có, lắng nghe là một nửa của giao tiếp.",
+                          "[CÂU HỎI 5] Bạn có thích nói chuyện với người lạ không?", "-> Trả lời: Đôi khi, nó giúp tôi học điều mới.",
+                          "[CÂU HỎI 6] Ngôn ngữ cơ thể có quan trọng không?", "-> Trả lời: Có, nó cho thấy bạn tự tin ra sao.",
+                          "[CÂU HỎI 7] Bạn giao tiếp với bạn bè thế nào?", "-> Trả lời: Tôi nói chuyện tử tế và thành thật.",
+                          "[CÂU HỎI 8] Bạn có thể học giao tiếp không?", "-> Trả lời: Có, bạn có thể đọc sách và luyện tập.",
+                          "[CÂU HỎI 9] Nói tiếng Anh có khó không?", "-> Trả lời: Có, nhưng học rất vui.",
+                          "[CÂU HỎI 10] Ai là người diễn thuyết tuyệt vời?", "-> Trả lời: Tôi nghĩ Barack Obama là một diễn giả tuyệt vời."
+                      ] 
                     }
                 ]
             },
             dung: {
-                name: "Nguyễn Thị Ngọc Dung",
-                topic: "Global Warming & Climate Change",
-                targetTime: "~3.5 - 4 phút",
-                badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
-                slides: [
-                    {
-                        number: 1,
-                        title: "SLIDE 1: TITLE SLIDE",
-                        subtitle: "Đặt vấn đề & Sự cấp bách",
-                        summary: "Title, Specific Purpose Statement, Student Info",
-                        time: "~40s",
-                        text: [
-                            "Hello teacher and everyone.",
-                            "My name is Nguyễn Thị Ngọc Dung.",
-                            "Nowadays, global warming and climate change are seen as huge environmental concerns for most people.",
-                            "But what's the reason for it and why is it such an urgent problem?",
-                            "Today, I'm going to discuss the main causes of global warming and why it poses such a severe threat to our planet."
-                        ]
-                    },
-                    {
-                        number: 2,
-                        title: "SLIDE 2: OVERVIEW",
-                        subtitle: "Cấu trúc bài nói (Causes vs. Effects)",
-                        summary: "Overview (Part 1: The Causes | Part 2: The Effects)",
-                        time: "~30s",
-                        text: [
-                            "To help you easily follow along, my presentation is divided into two main parts:",
-                            "First, The Causes – how human activities and air pollution heat up the Earth.",
-                            "Second, The Effects – how extreme weather, loss of biodiversity, and rising sea levels threaten human life.",
-                            "Now, let’s look at the first part!"
-                        ]
-                    },
-                    {
-                        number: 3,
-                        title: "SLIDE 3: MAIN POINT 1",
-                        subtitle: "Nguyên nhân chính (The Causes)",
-                        summary: "Fossil Fuels (Oil, Gas, Coal), Air Pollution, Non-biodegradable waste",
-                        time: "~45s",
-                        text: [
-                            "First of all, the main causes mostly come from pollution.",
-                            "Particularly, air pollution comes from toxic gases released by burning fossil fuels like oil, gas, and coal.",
-                            "When burned, these gases get trapped in the atmosphere and continue to heat up the air.",
-                            "Other than that, non-biodegradable materials such as plastic bags and industrial waste also contribute heavily to this problem."
-                        ]
-                    },
-                    {
-                        number: 4,
-                        title: "SLIDE 4: MAIN POINT 2 (PART 1)",
-                        subtitle: "Tác động đến Tự nhiên (Impact on Nature)",
-                        summary: "Extreme Weather (Hurricanes, Droughts), Loss of Biodiversity & Habitats",
-                        time: "~45s",
-                        text: [
-                            "So, why should we be so concerned about global warming?",
-                            "First, as the Earth gets hotter, climates are going to become harsher and more extreme.",
-                            "Natural disasters like hurricanes, droughts, and strong storms will become more frequent and violent.",
-                            "As well as that, many animals are threatened because they are losing their natural habitats as temperatures rise."
-                        ]
-                    },
-                    {
-                        number: 5,
-                        title: "SLIDE 5: MAIN POINT 2 (PART 2)",
-                        subtitle: "Đe dọa đến Con người (Threat to Humans)",
-                        summary: "Melting Ice, Rising Sea Levels, Extreme Heat, Agriculture Impact",
-                        time: "~45s",
-                        text: [
-                            "Worst of all, we, humans, are going to get directly affected by this too.",
-                            "As ice melts at the poles, rising sea levels pose a serious threat to millions of people living in coastal areas.",
-                            "Furthermore, many regions in the world are becoming almost way too hot and dry to live, directly affecting agriculture and our daily life."
-                        ]
-                    },
-                    {
-                        number: 6,
-                        title: "SLIDE 6: RECAP & CALL TO ACTION",
-                        subtitle: "Kết luận & Hành động xanh",
-                        summary: "Protect Our Planet, Small Green Actions, Thank You",
-                        time: "~40s",
-                        text: [
-                            "To sum up, global warming is a real and urgent threat caused by pollution, but small green actions today can make a big difference for tomorrow.",
-                            "That’s all for my presentation today.",
-                            "I hope you found this helpful and perhaps even learned a thing or two from this.",
-                            "Thank you so much for listening!"
-                        ]
+                topic1: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello teacher and everyone.", "My name is Ngoc Dung.", "Today I will discuss the benefits of a plant-based diet.", "Eating vegetables is a very popular lifestyle now.", "It is the best way to stay healthy and fit.", "I will share my thoughts with you."], 
+                      textVN: ["Chào thầy cô và mọi người.", "Tên em là Ngọc Dung.", "Hôm nay em sẽ thảo luận lợi ích của chế độ ăn thực vật.", "Ăn rau là một lối sống rất phổ biến hiện nay.", "Đó là cách tốt nhất để khỏe mạnh và cân đối.", "Em sẽ chia sẻ suy nghĩ của mình với mọi người."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["To help you easily follow, I divide my speech into two parts.", "First, we look at weight control.", "Second, we talk about saving money.", "Let's explore the first benefit."], 
+                      textVN: ["Để giúp mọi người dễ theo dõi, em chia bài nói thành 2 phần.", "Đầu tiên, ta xem xét việc kiểm soát cân nặng.", "Thứ hai, ta nói về việc tiết kiệm tiền.", "Hãy cùng khám phá lợi ích đầu tiên."] },
+                    { num: 3, title: "Body 1", sub: "Kiểm soát cân nặng", time: "~50s", 
+                      textEN: ["First, eating plants helps you control your weight naturally.", "Vegetables have a lot of fiber and very low fat.", "When you eat them, you feel full but do not gain weight.", "It is much better than skipping meals to be thin.", "You will get a beautiful and fit body safely."], 
+                      textVN: ["Đầu tiên, ăn thực vật giúp bạn kiểm soát cân nặng tự nhiên.", "Rau củ có nhiều chất xơ và rất ít chất béo.", "Khi ăn chúng, bạn thấy no nhưng không bị tăng cân.", "Nó tốt hơn nhiều so với việc nhịn ăn để gầy.", "Bạn sẽ có một cơ thể đẹp và cân đối một cách an toàn."] },
+                    { num: 4, title: "Body 2", sub: "Tiết kiệm tiền", time: "~50s", 
+                      textEN: ["Second, a plant diet is very cheap for students.", "Pork, beef, and seafood are very expensive in the market.", "But tofu, mushrooms, and beans are extremely cheap.", "You can save a lot of money every single month.", "You can use that money to buy books or travel."], 
+                      textVN: ["Thứ hai, ăn thực vật rất rẻ đối với sinh viên.", "Thịt lợn, bò, và hải sản rất đắt ngoài chợ.", "Nhưng đậu hũ, nấm, và các loại đậu thì cực kỳ rẻ.", "Bạn có thể tiết kiệm rất nhiều tiền mỗi tháng.", "Bạn có thể dùng tiền đó để mua sách hoặc đi du lịch."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In conclusion, eating greens saves your money and gives you a great body.", "You will look good and feel happy.", "Try to cook a simple vegetable meal tonight.", "Your body and your wallet will thank you.", "Thank you for your attention."], 
+                      textVN: ["Tóm lại, ăn rau xanh tiết kiệm tiền và cho bạn cơ thể tuyệt vời.", "Bạn sẽ trông đẹp và cảm thấy hạnh phúc.", "Hãy thử nấu một bữa rau đơn giản tối nay.", "Cơ thể và ví tiền của bạn sẽ cảm ơn bạn.", "Cảm ơn vì sự chú ý của mọi người."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] Can we eat eggs on this diet?", "-> Answer: Yes, if you are not a strict vegan.",
+                          "[CÂU HỎI 2] What is your best plant dish?", "-> Answer: I cook very good tofu with tomato sauce.",
+                          "[CÂU HỎI 3] Do you feel hungry quickly?", "-> Answer: Sometimes. I eat nuts when I feel hungry.",
+                          "[CÂU HỎI 4] Where to buy cheap vegetables?", "-> Answer: I always buy them at the local market.",
+                          "[CÂU HỎI 5] Is it hard to eat out with friends?", "-> Answer: A bit, but many cafes have good salads now.",
+                          "[CÂU HỎI 6] Do you grow vegetables at home?", "-> Answer: Yes, I grow small tomatoes on my balcony.",
+                          "[CÂU HỎI 7] What about eating fruit?", "-> Answer: Fruit is great for sweet snacks.",
+                          "[CÂU HỎI 8] Does it give you energy for sports?", "-> Answer: Yes, bananas give me great energy before running.",
+                          "[CÂU HỎI 9] How do you wash your vegetables?", "-> Answer: I always wash them carefully with salt water.",
+                          "[CÂU HỎI 10] Does your family agree with this diet?", "-> Answer: Yes, my mom loves cooking vegetables too."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Chúng ta có thể ăn trứng trong chế độ này không?", "-> Trả lời: Có, nếu bạn không phải người ăn chay thuần.",
+                          "[CÂU HỎI 2] Món thực vật ngon nhất của bạn là gì?", "-> Trả lời: Tôi nấu đậu hũ sốt cà chua rất ngon.",
+                          "[CÂU HỎI 3] Bạn có nhanh thấy đói không?", "-> Trả lời: Đôi khi. Tôi ăn các loại hạt khi thấy đói.",
+                          "[CÂU HỎI 4] Mua rau rẻ ở đâu?", "-> Trả lời: Tôi luôn mua chúng ở chợ địa phương.",
+                          "[CÂU HỎI 5] Ăn ngoài với bạn bè có khó không?", "-> Trả lời: Hơi khó, nhưng giờ nhiều quán có salad ngon.",
+                          "[CÂU HỎI 6] Bạn có trồng rau ở nhà không?", "-> Trả lời: Có, tôi trồng cà chua bi ngoài ban công.",
+                          "[CÂU HỎI 7] Thế còn việc ăn trái cây thì sao?", "-> Trả lời: Trái cây rất tuyệt làm đồ ăn vặt ngọt.",
+                          "[CÂU HỎI 8] Nó có cho năng lượng tập thể thao không?", "-> Trả lời: Có, chuối cho tôi năng lượng tuyệt vời trước khi chạy.",
+                          "[CÂU HỎI 9] Bạn rửa rau như thế nào?", "-> Trả lời: Tôi luôn rửa cẩn thận bằng nước muối.",
+                          "[CÂU HỎI 10] Gia đình bạn có đồng ý chế độ ăn này không?", "-> Trả lời: Có, mẹ tôi cũng rất thích nấu rau."
+                      ] 
                     }
+                ],
+                topic2: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello teacher.", "I am Ngoc Dung.", "My topic today is the benefits of sports.", "Sports are not just for fun or losing weight.", "They build our character and life skills.", "I will explain this to you."], 
+                      textVN: ["Chào thầy cô.", "Em là Ngọc Dung.", "Chủ đề hôm nay của em là lợi ích của thể thao.", "Thể thao không chỉ để cho vui hay giảm cân.", "Chúng xây dựng tính cách và kỹ năng sống của ta.", "Em sẽ giải thích điều này cho mọi người."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My presentation has two simple parts.", "First, I will focus on self-discipline.", "Second, I will talk about teamwork skills.", "Let's jump into the first point."], 
+                      textVN: ["Bài trình bày của em có 2 phần đơn giản.", "Đầu tiên, em sẽ tập trung vào tính tự kỷ luật.", "Thứ hai, em sẽ nói về kỹ năng làm việc nhóm.", "Hãy cùng bước vào ý đầu tiên."] },
+                    { num: 3, title: "Body 1", sub: "Sự kỷ luật", time: "~50s", 
+                      textEN: ["First, sports teach you strong discipline.", "You have to wake up early in the morning to practice.", "You learn how to follow the strict rules of the game.", "You learn not to give up when you are tired.", "This discipline is very good for your future job."], 
+                      textVN: ["Đầu tiên, thể thao dạy bạn kỷ luật thép.", "Bạn phải dậy sớm buổi sáng để tập luyện.", "Bạn học cách tuân thủ luật lệ nghiêm ngặt của trò chơi.", "Bạn học cách không bỏ cuộc khi mệt mỏi.", "Sự kỷ luật này rất tốt cho công việc tương lai của bạn."] },
+                    { num: 4, title: "Body 2", sub: "Làm việc nhóm", time: "~50s", 
+                      textEN: ["Second, sports help you make friends and work in a team.", "When playing football or volleyball, you must talk to your team.", "You learn how to support and help each other to win.", "It improves your communication skills very clearly.", "You cannot win alone in a team sport."], 
+                      textVN: ["Thứ hai, thể thao giúp bạn kết bạn và làm việc nhóm.", "Khi đá bóng hay bóng chuyền, bạn phải nói chuyện với đội.", "Bạn học cách hỗ trợ và giúp nhau để chiến thắng.", "Nó cải thiện kỹ năng giao tiếp của bạn rất rõ ràng.", "Bạn không thể thắng một mình trong môn thể thao đồng đội."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["To sum up, sports give us discipline and great teamwork.", "They make you a stronger and better person.", "Find a sport you like and play it with your friends.", "It is a great lesson outside the classroom.", "Thank you very much."], 
+                      textVN: ["Tóm lại, thể thao cho ta kỷ luật và làm việc nhóm tuyệt vời.", "Chúng biến bạn thành một người mạnh mẽ và tốt hơn.", "Hãy tìm 1 môn bạn thích và chơi cùng bạn bè.", "Đó là một bài học tuyệt vời bên ngoài lớp học.", "Cảm ơn rất nhiều."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] What is the most popular sport in Vietnam?", "-> Answer: I think it is football. Everyone loves it.",
+                          "[CÂU HỎI 2] Do you like watching or playing sports?", "-> Answer: I like playing because I want to be active.",
+                          "[CÂU HỎI 3] What sport do you play?", "-> Answer: I play volleyball at my university club.",
+                          "[CÂU HỎI 4] Is winning important?", "-> Answer: It is fun, but trying your best is more important.",
+                          "[CÂU HỎI 5] How do sports help communication?", "-> Answer: You have to shout and signal to your friends on the field.",
+                          "[CÂU HỎI 6] Do you get angry when you lose?", "-> Answer: No, losing teaches me how to do better next time.",
+                          "[CÂU HỎI 7] Are extreme sports dangerous?", "-> Answer: Yes, you must wear helmets and be careful.",
+                          "[CÂU HỎI 8] Should children play sports?", "-> Answer: Yes, it helps them grow taller and healthier.",
+                          "[CÂU HỎI 9] Do you have a sports idol?", "-> Answer: I really admire Cristiano Ronaldo for his hard work.",
+                          "[CÂU HỎI 10] What equipment do you need for your sport?", "-> Answer: I just need a good pair of shoes and a ball."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Môn thể thao phổ biến nhất VN là gì?", "-> Trả lời: Tôi nghĩ đó là bóng đá. Ai cũng thích nó.",
+                          "[CÂU HỎI 2] Bạn thích xem hay chơi thể thao hơn?", "-> Trả lời: Tôi thích chơi vì tôi muốn được năng động.",
+                          "[CÂU HỎI 3] Bạn chơi môn thể thao nào?", "-> Trả lời: Tôi chơi bóng chuyền ở CLB đại học.",
+                          "[CÂU HỎI 4] Chiến thắng có quan trọng không?", "-> Trả lời: Nó vui, nhưng cố gắng hết sức thì quan trọng hơn.",
+                          "[CÂU HỎI 5] Thể thao giúp giao tiếp thế nào?", "-> Trả lời: Bạn phải hét lên và ra hiệu cho bạn bè trên sân.",
+                          "[CÂU HỎI 6] Bạn có tức giận khi thua không?", "-> Trả lời: Không, thua cuộc dạy tôi làm tốt hơn lần sau.",
+                          "[CÂU HỎI 7] Thể thao mạo hiểm có nguy hiểm không?", "-> Trả lời: Có, bạn phải đội mũ bảo hiểm và cẩn thận.",
+                          "[CÂU HỎI 8] Trẻ em có nên chơi thể thao không?", "-> Trả lời: Có, nó giúp chúng lớn cao và khỏe hơn.",
+                          "[CÂU HỎI 9] Bạn có thần tượng thể thao không?", "-> Trả lời: Tôi rất ngưỡng mộ Ronaldo vì sự chăm chỉ của anh ấy.",
+                          "[CÂU HỎI 10] Bạn cần dụng cụ gì cho môn thể thao của mình?", "-> Trả lời: Tôi chỉ cần một đôi giày tốt và một quả bóng."
+                      ] 
+                    }
+                ],
+                topic3: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello everyone.", "I am Ngoc Dung.", "Today I will discuss the effects of technology on communication.", "Technology connects people around the world.", "But it also isolates us in real life.", "I will talk about this paradox."], 
+                      textVN: ["Chào mọi người.", "Tôi là Ngọc Dung.", "Hôm nay tôi sẽ thảo luận tác động của công nghệ lên giao tiếp.", "Công nghệ kết nối mọi người trên khắp thế giới.", "Nhưng nó cũng cô lập chúng ta ngoài đời thực.", "Tôi sẽ nói về nghịch lý này."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My speech contains two main parts.", "First, I will talk about fast and easy connection.", "Second, I will discuss the problem of virtual life.", "Let's see the good side first."], 
+                      textVN: ["Bài nói của tôi gồm 2 phần chính.", "Đầu tiên, tôi sẽ nói về sự kết nối nhanh và dễ dàng.", "Thứ hai, tôi sẽ thảo luận vấn đề của cuộc sống ảo.", "Hãy xem mặt tốt trước."] },
+                    { num: 3, title: "Body 1", sub: "Kết nối nhanh", time: "~50s", 
+                      textEN: ["First, distance is not a problem anymore.", "You can video call your family easily even if they live far away.", "We can send messages and pictures in just one second.", "It helps companies do business globally very fast.", "The whole world is like a small village now."], 
+                      textVN: ["Đầu tiên, khoảng cách không còn là vấn đề nữa.", "Bạn có thể gọi video cho gia đình dễ dàng dù họ sống xa.", "Ta có thể gửi tin nhắn và ảnh chỉ trong 1 giây.", "Nó giúp các công ty kinh doanh toàn cầu rất nhanh.", "Cả thế giới giờ giống như một ngôi làng nhỏ."] },
+                    { num: 4, title: "Body 2", sub: "Cuộc sống ảo", time: "~50s", 
+                      textEN: ["Second, people spend too much time on virtual life.", "When friends go to a cafe, they just look at their phones.", "They do not talk face-to-face anymore.", "People compare themselves to perfect photos on Facebook.", "This makes many young people feel sad and lonely in real life."], 
+                      textVN: ["Thứ hai, mọi người dành quá nhiều thời gian cho cuộc sống ảo.", "Khi bạn bè đi cafe, họ chỉ nhìn vào điện thoại.", "Họ không nói chuyện trực tiếp với nhau nữa.", "Mọi người so sánh bản thân với những bức ảnh hoàn hảo trên Facebook.", "Điều này làm nhiều người trẻ thấy buồn và cô đơn ngoài đời thực."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In short, technology is amazing for connection but bad for real emotions.", "We should use technology to connect, not to hide.", "Put your phone down when you are with family.", "Real talk is always the best.", "Thank you for listening."], 
+                      textVN: ["Tóm lại, công nghệ tuyệt vời cho kết nối nhưng tệ cho cảm xúc thật.", "Ta nên dùng công nghệ để kết nối, không phải để trốn tránh.", "Hãy đặt điện thoại xuống khi ở cùng gia đình.", "Trò chuyện thật luôn là điều tuyệt nhất.", "Cảm ơn đã lắng nghe."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] What app do you use to communicate?", "-> Answer: I usually use Zalo and Messenger.",
+                          "[CÂU HỎI 2] Have you ever misunderstood a text message?", "-> Answer: Yes, text messages have no emotion, so it is easy to misunderstand.",
+                          "[CÂU HỎI 3] Do you prefer calling or texting?", "-> Answer: I prefer calling because I can hear their voice.",
+                          "[CÂU HỎI 4] How to stop phone addiction?", "-> Answer: I put my phone in another room when I sleep.",
+                          "[CÂU HỎI 5] Is Facebook good for students?", "-> Answer: Yes, for sharing documents, but bad for wasting time.",
+                          "[CÂU HỎI 6] Do you write paper letters?", "-> Answer: No, I only write emails now.",
+                          "[CÂU HỎI 7] Do you feel lonely sometimes?", "-> Answer: Yes, when I scroll TikTok too much alone in my room.",
+                          "[CÂU HỎI 8] How many friends do you have online?", "-> Answer: Over 500, but I only talk to 5 real friends.",
+                          "[CÂU HỎI 9] Is video call better than meeting?", "-> Answer: No, a real hug is always better.",
+                          "[CÂU HỎI 10] Will robots communicate for us?", "-> Answer: Maybe AI will reply to emails, but not real feelings."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Bạn dùng app nào để giao tiếp?", "-> Trả lời: Tôi thường dùng Zalo và Messenger.",
+                          "[CÂU HỎI 2] Bạn từng hiểu lầm tin nhắn chưa?", "-> Trả lời: Rồi, tin nhắn không có cảm xúc nên rất dễ hiểu lầm.",
+                          "[CÂU HỎI 3] Bạn thích gọi điện hay nhắn tin hơn?", "-> Trả lời: Tôi thích gọi điện vì tôi nghe được giọng họ.",
+                          "[CÂU HỎI 4] Làm sao để ngừng nghiện điện thoại?", "-> Trả lời: Tôi để điện thoại ở phòng khác khi ngủ.",
+                          "[CÂU HỎI 5] Facebook có tốt cho sinh viên không?", "-> Trả lời: Có, để chia sẻ tài liệu, nhưng xấu vì tốn thời gian.",
+                          "[CÂU HỎI 6] Bạn có viết thư tay không?", "-> Trả lời: Không, giờ tôi chỉ viết email thôi.",
+                          "[CÂU HỎI 7] Đôi khi bạn có thấy cô đơn không?", "-> Trả lời: Có, khi tôi lướt TikTok quá nhiều một mình trong phòng.",
+                          "[CÂU HỎI 8] Bạn có bao nhiêu bạn bè trên mạng?", "-> Trả lời: Hơn 500, nhưng tôi chỉ nói chuyện với 5 người bạn thật.",
+                          "[CÂU HỎI 9] Gọi video có tốt hơn gặp mặt không?", "-> Trả lời: Không, một cái ôm thật luôn tốt hơn.",
+                          "[CÂU HỎI 10] Robot sẽ giao tiếp thay ta chứ?", "-> Trả lời: Có thể AI sẽ trả lời email, nhưng không phải cảm xúc thật."
+                      ] 
+                    }
+                ],
+                topic4: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello teacher.", "My name is Ngoc Dung.", "Today I will discuss the pros and cons of sustainable tourism.", "Tourism can destroy places, but it can also save them.", "We need to understand how to travel right.", "I will focus on education and tradition."], 
+                      textVN: ["Chào thầy cô.", "Tên em là Ngọc Dung.", "Hôm nay em sẽ thảo luận ưu và nhược điểm của du lịch bền vững.", "Du lịch có thể phá hủy các địa điểm, nhưng cũng có thể cứu chúng.", "Ta cần hiểu cách đi du lịch đúng đắn.", "Em sẽ tập trung vào giáo dục và truyền thống."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["I will divide my presentation into two main ideas.", "First, educating tourists to love nature.", "Second, supporting traditional local jobs.", "Let's explore the first idea."], 
+                      textVN: ["Em sẽ chia bài thuyết trình thành 2 ý chính.", "Đầu tiên, giáo dục du khách yêu thiên nhiên.", "Thứ hai, hỗ trợ các công việc truyền thống địa phương.", "Hãy khám phá ý đầu tiên."] },
+                    { num: 3, title: "Body 1", sub: "Giáo dục du khách", time: "~50s", 
+                      textEN: ["First, sustainable tourism educates people.", "When tourists walk in a clean forest, they learn to love nature.", "They see beautiful birds and rivers, so they want to protect them.", "They will stop using plastic bottles.", "They become better and greener citizens after the trip."], 
+                      textVN: ["Đầu tiên, du lịch bền vững giáo dục con người.", "Khi du khách đi trong rừng sạch, họ học cách yêu thiên nhiên.", "Họ thấy chim và sông đẹp, nên họ muốn bảo vệ chúng.", "Họ sẽ ngừng dùng chai nhựa.", "Họ trở thành công dân tốt và xanh hơn sau chuyến đi."] },
+                    { num: 4, title: "Body 2", sub: "Bảo vệ truyền thống", time: "~50s", 
+                      textEN: ["Second, this helps keep old traditions alive.", "Many traditional jobs are disappearing.", "But tourists love buying authentic handmade clothes and tools.", "When we buy them, local workers earn money to continue their craft.", "We help save the cultural history of the country."], 
+                      textVN: ["Thứ hai, việc này giúp giữ cho truyền thống cũ tồn tại.", "Nhiều công việc truyền thống đang biến mất.", "Nhưng du khách rất thích mua quần áo và dụng cụ làm tay thật.", "Khi ta mua, thợ địa phương có tiền để tiếp tục nghề.", "Ta giúp cứu lịch sử văn hóa của đất nước."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["To sum up, sustainable tourism teaches us to love nature and saves old traditions.", "It is the only way for the future.", "Please be a smart and kind tourist.", "Leave nothing but footprints.", "Thank you very much."], 
+                      textVN: ["Tóm lại, du lịch bền vững dạy ta yêu thiên nhiên và cứu truyền thống cũ.", "Đó là cách duy nhất cho tương lai.", "Xin hãy làm một du khách thông minh và tử tế.", "Đừng để lại gì ngoài những dấu chân.", "Cảm ơn rất nhiều."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] Would you pay more for an eco-hotel?", "-> Answer: Yes, if the money really protects the environment.",
+                          "[CÂU HỎI 2] How can a student travel green?", "-> Answer: Use public buses and don't litter.",
+                          "[CÂU HỎI 3] Are local foods safe to eat?", "-> Answer: Yes, just choose clean places with many local people.",
+                          "[CÂU HỎI 4] Have you done a homestay?", "-> Answer: Yes, I stayed with a farmer family in Da Lat.",
+                          "[CÂU HỎI 5] What is bad tourism?", "-> Answer: Bad tourism is cutting trees to build big resorts.",
+                          "[CÂU HỎI 6] Do you speak to local people?", "-> Answer: Yes, they always have interesting stories.",
+                          "[CÂU HỎI 7] Do you buy things to support locals?", "-> Answer: I always buy local fruits and coffee.",
+                          "[CÂU HỎI 8] Should we have limits on tourists?", "-> Answer: Yes, too many people will destroy the place.",
+                          "[CÂU HỎI 9] Do you use plastic bags when traveling?", "-> Answer: I try to use my cloth bag instead.",
+                          "[CÂU HỎI 10] Why is culture important?", "-> Answer: Because culture is the soul of a country."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Bạn có trả thêm tiền cho khách sạn sinh thái không?", "-> Trả lời: Có, nếu số tiền đó thực sự bảo vệ môi trường.",
+                          "[CÂU HỎI 2] Sinh viên làm sao để du lịch xanh?", "-> Trả lời: Dùng xe buýt công cộng và không xả rác.",
+                          "[CÂU HỎI 3] Đồ ăn địa phương có an toàn không?", "-> Trả lời: Có, chỉ cần chọn chỗ sạch có nhiều người địa phương ăn.",
+                          "[CÂU HỎI 4] Bạn từng ở homestay chưa?", "-> Trả lời: Rồi, tôi từng ở với một gia đình nông dân ở Đà Lạt.",
+                          "[CÂU HỎI 5] Du lịch tồi tệ là gì?", "-> Trả lời: Du lịch tồi tệ là chặt cây để xây resort lớn.",
+                          "[CÂU HỎI 6] Bạn có nói chuyện với người dân không?", "-> Trả lời: Có, họ luôn có những câu chuyện thú vị.",
+                          "[CÂU HỎI 7] Bạn có mua đồ ủng hộ người dân không?", "-> Trả lời: Tôi luôn mua trái cây và cà phê địa phương.",
+                          "[CÂU HỎI 8] Chúng ta có nên giới hạn lượng du khách?", "-> Trả lời: Có, quá nhiều người sẽ phá hủy địa điểm đó.",
+                          "[CÂU HỎI 9] Bạn có dùng túi nilon khi đi du lịch không?", "-> Trả lời: Tôi cố gắng dùng túi vải của mình thay thế.",
+                          "[CÂU HỎI 10] Tại sao văn hóa lại quan trọng?", "-> Trả lời: Bởi vì văn hóa là linh hồn của một đất nước."
+                      ] 
+                    }
+                ],
+                topic5: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~45s", 
+                      textEN: ["Hello everyone.", "I am Ngoc Dung.", "Today I will discuss learning foreign languages.", "Language is not just words, it is a workout for the brain.", "It also helps you access world knowledge.", "Let me show you why."], 
+                      textVN: ["Chào mọi người.", "Tôi là Ngọc Dung.", "Hôm nay tôi sẽ thảo luận việc học ngoại ngữ.", "Ngôn ngữ không chỉ là từ vựng, nó là bài tập thể dục cho não.", "Nó cũng giúp bạn tiếp cận kiến thức thế giới.", "Để tôi cho bạn thấy tại sao."] },
+                    { num: 2, title: "Overview", sub: "Tổng quan", time: "~30s", 
+                      textEN: ["My speech has two simple parts.", "First, I will talk about brain health.", "Second, I will talk about access to information.", "Let's start with the brain."], 
+                      textVN: ["Bài nói của tôi có 2 phần đơn giản.", "Đầu tiên, tôi sẽ nói về sức khỏe não bộ.", "Thứ hai, tôi sẽ nói về việc tiếp cận thông tin.", "Hãy bắt đầu với não bộ."] },
+                    { num: 3, title: "Body 1", sub: "Khỏe não bộ", time: "~50s", 
+                      textEN: ["First, learning a language makes your brain very strong.", "You have to remember grammar and new vocabulary every day.", "This trains your memory like a muscle.", "Scientists say people who speak two languages have a younger brain.", "It prevents memory loss when you get old."], 
+                      textVN: ["Đầu tiên, học ngôn ngữ làm não bạn rất khỏe.", "Bạn phải nhớ ngữ pháp và từ vựng mới mỗi ngày.", "Điều này rèn luyện trí nhớ của bạn như một múi cơ.", "Khoa học nói người nói 2 ngôn ngữ có bộ não trẻ hơn.", "Nó ngăn ngừa suy giảm trí nhớ khi bạn già đi."] },
+                    { num: 4, title: "Body 2", sub: "Kiến thức thế giới", time: "~50s", 
+                      textEN: ["Second, language is the key to global knowledge.", "Most useful websites and books are written in English.", "If you know English, you can read and learn anything.", "You don't need to wait for someone to translate it for you.", "It makes you an independent and smart person."], 
+                      textVN: ["Thứ hai, ngôn ngữ là chìa khóa mở ra kiến thức toàn cầu.", "Hầu hết các trang web và sách hữu ích được viết bằng tiếng Anh.", "Nếu biết tiếng Anh, bạn có thể đọc và học mọi thứ.", "Bạn không cần đợi ai đó dịch cho bạn.", "Nó làm bạn thành một người độc lập và thông minh."] },
+                    { num: 5, title: "Conclusion", sub: "Kết luận", time: "~40s", 
+                      textEN: ["In conclusion, learning a language trains your brain and expands your knowledge.", "It is the best investment for yourself.", "Spend just 20 minutes a day to learn.", "Your future self will thank you.", "Thank you."], 
+                      textVN: ["Tóm lại, học ngôn ngữ rèn luyện não và mở rộng kiến thức.", "Đó là khoản đầu tư tốt nhất cho bản thân bạn.", "Hãy dành chỉ 20 phút mỗi ngày để học.", "Bản thân bạn trong tương lai sẽ cảm ơn bạn.", "Cảm ơn."] },
+                    { num: 6, title: "Q&A Predictions", sub: "10 Câu hỏi dự đoán", time: "~2m", 
+                      textEN: [
+                          "[CÂU HỎI 1] How many languages do you speak?", "-> Answer: I speak Vietnamese fluently and basic English.",
+                          "[CÂU HỎI 2] What is your learning method?", "-> Answer: I learn by listening to English podcasts every morning.",
+                          "[CÂU HỎI 3] Is memory important for language?", "-> Answer: Yes, but practice is more important than memory.",
+                          "[CÂU HỎI 4] What book did you read in English?", "-> Answer: I read a simple story book for children to practice.",
+                          "[CÂU HỎI 5] Do you use AI to learn?", "-> Answer: Yes, I use ChatGPT to check my grammar mistakes.",
+                          "[CÂU HỎI 6] Are old people too old to learn?", "-> Answer: No, learning is for everyone at any age.",
+                          "[CÂU HỎI 7] Do you feel stressed when learning?", "-> Answer: Sometimes, when I cannot remember a new word.",
+                          "[CÂU HỎI 8] How to learn vocabulary fast?", "-> Answer: I use flashcards on my phone to review words.",
+                          "[CÂU HỎI 9] Is speaking alone weird?", "-> Answer: No, it is a great way to improve confidence.",
+                          "[CÂU HỎI 10] Why did you choose English?", "-> Answer: Because it is the most useful language in the world."
+                      ], 
+                      textVN: [
+                          "[CÂU HỎI 1] Bạn nói được bao nhiêu ngôn ngữ?", "-> Trả lời: Tôi nói lưu loát tiếng Việt và tiếng Anh cơ bản.",
+                          "[CÂU HỎI 2] Phương pháp học của bạn là gì?", "-> Trả lời: Tôi học bằng cách nghe podcast tiếng Anh mỗi sáng.",
+                          "[CÂU HỎI 3] Trí nhớ có quan trọng với ngôn ngữ không?", "-> Trả lời: Có, nhưng thực hành quan trọng hơn trí nhớ.",
+                          "[CÂU HỎI 4] Bạn đã đọc sách gì bằng tiếng Anh?", "-> Trả lời: Tôi đọc một cuốn truyện đơn giản cho trẻ em để luyện tập.",
+                          "[CÂU HỎI 5] Bạn có dùng AI để học không?", "-> Trả lời: Có, tôi dùng ChatGPT để kiểm tra lỗi ngữ pháp.",
+                          "[CÂU HỎI 6] Người già có quá tuổi để học không?", "-> Trả lời: Không, việc học là cho tất cả mọi người ở mọi lứa tuổi.",
+                          "[CÂU HỎI 7] Bạn có thấy áp lực khi học không?", "-> Trả lời: Thỉnh thoảng, khi tôi không thể nhớ một từ mới.",
+                          "[CÂU HỎI 8] Làm sao để học từ vựng nhanh?", "-> Trả lời: Tôi dùng flashcard trên điện thoại để ôn lại từ.",
+                          "[CÂU HỎI 9] Nói chuyện một mình có kỳ quặc không?", "-> Trả lời: Không, đó là cách tuyệt vời để tăng sự tự tin.",
+                          "[CÂU HỎI 10] Tại sao bạn chọn tiếng Anh?", "-> Trả lời: Bởi vì nó là ngôn ngữ hữu ích nhất trên thế giới."
+                      ] 
+                    }
+                ],
+                topic6: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will talk about communication skills.", "It is the key to society.", "I will explain how it builds trust and leadership."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về kỹ năng giao tiếp.", "Nó là chìa khóa của xã hội.", "Tôi sẽ giải thích nó xây dựng niềm tin và sự lãnh đạo ra sao."] },
+                    { num: 2, title: "Body 1", sub: "Xây dựng niềm tin", time: "~40s", textEN: ["First, good communication builds trust.", "If you are honest and polite, people will believe you.", "Trust is very important in business.", "Customers will buy your products."], textVN: ["Đầu tiên, giao tiếp tốt xây dựng niềm tin.", "Nếu bạn trung thực và lịch sự, mọi người sẽ tin bạn.", "Niềm tin rất quan trọng trong kinh doanh.", "Khách hàng sẽ mua sản phẩm của bạn."] },
+                    { num: 3, title: "Body 2", sub: "Kỹ năng lãnh đạo", time: "~40s", textEN: ["Second, it shows your leadership.", "A good leader must talk confidently in front of the crowd.", "They explain the goals clearly.", "So the team knows what to do."], textVN: ["Thứ hai, nó thể hiện sự lãnh đạo của bạn.", "Lãnh đạo tốt phải nói tự tin trước đám đông.", "Họ giải thích mục tiêu rõ ràng.", "Để nhóm biết phải làm gì."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, speaking well brings trust and leadership.", "It is the most important soft skill.", "Read more books to speak better.", "Thank you."], textVN: ["Tóm lại, nói hay mang lại niềm tin và sự lãnh đạo.", "Nó là kỹ năng mềm quan trọng nhất.", "Hãy đọc nhiều sách hơn để nói tốt hơn.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Are you a good communicator?", "-> Answer: I am still learning, but I am getting better.", "[CÂU HỎI 2] Why are some people shy?", "-> Answer: Because they are afraid of making mistakes."], textVN: ["[CÂU HỎI 1] Bạn có phải người giao tiếp tốt không?", "-> Trả lời: Tôi vẫn đang học, nhưng tôi đang tốt lên.", "[CÂU HỎI 2] Sao vài người lại nhút nhát?", "-> Trả lời: Vì họ sợ mắc lỗi."] }
+                ],
+                topic7: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "Today I will discuss traveling.", "Traveling gives us the best memories.", "I will share its benefits and how to plan."], textVN: ["Chào thầy cô.", "Hôm nay em sẽ thảo luận về du lịch.", "Du lịch cho ta những kỷ niệm đẹp nhất.", "Em sẽ chia sẻ lợi ích và cách lên kế hoạch."] },
+                    { num: 2, title: "Body 1", sub: "Trải nghiệm sống", time: "~40s", textEN: ["First, traveling gives you life experience.", "You meet different people and see new things.", "It opens your eyes to the world.", "You become smarter and braver."], textVN: ["Đầu tiên, du lịch cho bạn kinh nghiệm sống.", "Bạn gặp người khác nhau và thấy điều mới.", "Nó mở rộng tầm mắt bạn với thế giới.", "Bạn trở nên thông minh và dũng cảm hơn."] },
+                    { num: 3, title: "Body 2", sub: "Kế hoạch hoàn hảo", time: "~40s", textEN: ["Second, for a perfect vacation, check the weather.", "You do not want to go to the beach on a rainy day.", "Also, book hotels one month before.", "This will save you time and money."], textVN: ["Thứ hai, cho kỳ nghỉ hoàn hảo, hãy xem thời tiết.", "Bạn không muốn đi biển vào ngày mưa.", "Ngoài ra, hãy đặt khách sạn trước 1 tháng.", "Điều này sẽ tiết kiệm thời gian và tiền bạc."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, travel makes you smart and happy.", "Remember to check the weather and book early.", "Enjoy every trip you take.", "Thank you."], textVN: ["Tóm lại, du lịch làm bạn thông minh và vui vẻ.", "Nhớ xem thời tiết và đặt chỗ sớm.", "Tận hưởng mọi chuyến đi của bạn.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What is your worst travel experience?", "-> Answer: Once I lost my phone at the airport.", "[CÂU HỎI 2] Beach or Mountain?", "-> Answer: I love the beach because I love swimming."], textVN: ["[CÂU HỎI 1] Trải nghiệm du lịch tệ nhất của bạn?", "-> Trả lời: Có lần tôi mất điện thoại ở sân bay.", "[CÂU HỎI 2] Biển hay Núi?", "-> Trả lời: Tôi thích biển vì tôi thích bơi."] }
+                ],
+                topic8: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will talk about the challenges of online learning.", "Learning at home is very hard.", "I will focus on distraction and health."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về thử thách học online.", "Học ở nhà rất khó.", "Tôi sẽ tập trung vào xao nhãng và sức khỏe."] },
+                    { num: 2, title: "Body 1", sub: "Xao nhãng", time: "~40s", textEN: ["First, it is easy to lose focus.", "At home, there are TVs, beds, and pets.", "When the teacher speaks, students open Facebook.", "There is no discipline at home."], textVN: ["Đầu tiên, rất dễ mất tập trung.", "Ở nhà, có TV, giường, và thú cưng.", "Khi giáo viên giảng, sinh viên mở Facebook.", "Không có kỷ luật ở nhà."] },
+                    { num: 3, title: "Body 2", sub: "Sức khỏe", time: "~40s", textEN: ["Second, sitting all day is bad for health.", "Students sit on chairs for 6 hours.", "They get back pain and eye pain.", "They do not move or exercise."], textVN: ["Thứ hai, ngồi cả ngày tệ cho sức khỏe.", "Sinh viên ngồi trên ghế 6 tiếng.", "Họ bị đau lưng và đau mắt.", "Họ không vận động hay tập thể dục."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, distraction and back pain are big problems.", "We must stand up and walk during breaks.", "Keep the phone away when studying.", "Thank you."], textVN: ["Tóm lại, xao nhãng và đau lưng là vấn đề lớn.", "Ta phải đứng lên và đi lại lúc nghỉ giải lao.", "Để điện thoại ra xa khi học.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Do you easily get distracted?", "-> Answer: Yes, my cat always jumps on my keyboard.", "[CÂU HỎI 2] How to fix back pain?", "-> Answer: Do some stretching exercises every hour."], textVN: ["[CÂU HỎI 1] Bạn có dễ bị xao nhãng không?", "-> Trả lời: Có, mèo của tôi hay nhảy lên bàn phím.", "[CÂU HỎI 2] Làm sao sửa chứng đau lưng?", "-> Trả lời: Tập giãn cơ mỗi giờ."] }
+                ],
+                topic9: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "Today I will talk about work-life balance.", "We should not work like a machine.", "I will tell you why balance brings success."], textVN: ["Chào thầy cô.", "Hôm nay em sẽ nói về cân bằng công việc-cuộc sống.", "Ta không nên làm việc như cái máy.", "Em sẽ nói tại sao cân bằng mang lại thành công."] },
+                    { num: 2, title: "Body 1", sub: "Năng lượng làm việc", time: "~40s", textEN: ["First, balance gives you high energy.", "If you rest well on Sunday, you work faster on Monday.", "Your brain is full of new ideas.", "Working too much makes you slow and stupid."], textVN: ["Đầu tiên, cân bằng cho bạn năng lượng cao.", "Nếu Chủ nhật nghỉ tốt, Thứ hai bạn làm nhanh hơn.", "Não bạn đầy ý tưởng mới.", "Làm quá nhiều làm bạn chậm chạp và ngốc nghếch."] },
+                    { num: 3, title: "Body 2", sub: "Tránh trầm cảm", time: "~40s", textEN: ["Second, it prevents depression.", "Many young people are depressed because of work pressure.", "You need hobbies like painting or walking.", "It heals your soul."], textVN: ["Thứ hai, nó ngăn ngừa trầm cảm.", "Nhiều người trẻ trầm cảm vì áp lực công việc.", "Bạn cần sở thích như vẽ hay đi dạo.", "Nó chữa lành tâm hồn bạn."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, taking a break is very important.", "It gives you energy and protects your mind.", "Love yourself first.", "Thank you."], textVN: ["Tóm lại, việc nghỉ ngơi rất quan trọng.", "Nó cho năng lượng và bảo vệ tâm trí bạn.", "Hãy yêu bản thân trước tiên.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Are you a workaholic?", "-> Answer: No, I always take time to play games.", "[CÂU HỎI 2] Why is hobby important?", "-> Answer: Because it makes me forget about stress."], textVN: ["[CÂU HỎI 1] Bạn có phải người nghiện công việc không?", "-> Trả lời: Không, tôi luôn dành thời gian chơi game.", "[CÂU HỎI 2] Tại sao sở thích lại quan trọng?", "-> Trả lời: Vì nó làm tôi quên đi căng thẳng."] }
+                ],
+                topic10: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss global warming.", "This is a very dangerous problem today.", "I will focus on pollution and farming."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận về nóng lên toàn cầu.", "Đây là vấn đề rất nguy hiểm hiện nay.", "Tôi sẽ tập trung vào ô nhiễm và nông nghiệp."] },
+                    { num: 2, title: "Body 1", sub: "Khí thải nhà máy", time: "~40s", textEN: ["First, the cause is factory pollution.", "Big factories burn coal day and night.", "Black smoke covers the sky.", "This traps the heat and makes the Earth boil."], textVN: ["Đầu tiên, nguyên nhân là ô nhiễm nhà máy.", "Các nhà máy lớn đốt than ngày và đêm.", "Khói đen bao phủ bầu trời.", "Nó giữ nhiệt và làm Trái đất sôi lên."] },
+                    { num: 3, title: "Body 2", sub: "Thiếu thức ăn", time: "~40s", textEN: ["Second, the effect is on our food.", "Because it is too hot, there is no rain.", "Farmers cannot grow rice or vegetables.", "People will not have enough food to eat."], textVN: ["Thứ hai, hậu quả là lên thức ăn của chúng ta.", "Vì quá nóng, không có mưa.", "Nông dân không thể trồng lúa hay rau.", "Con người sẽ không có đủ thức ăn."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, factories cause heating, and heating kills farming.", "We need to use clean solar energy.", "Save the earth before it is too late.", "Thank you."], textVN: ["Tóm lại, nhà máy gây nóng, và nóng giết chết nông nghiệp.", "Chúng ta cần dùng năng lượng mặt trời sạch.", "Cứu trái đất trước khi quá muộn.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] How does global warming affect your city?", "-> Answer: Ho Chi Minh City is getting hotter and flooded.", "[CÂU HỎI 2] What is clean energy?", "-> Answer: It is power from the sun and the wind."], textVN: ["[CÂU HỎI 1] Nóng lên toàn cầu ảnh hưởng TP của bạn sao?", "-> Trả lời: TPHCM đang nóng hơn và bị ngập.", "[CÂU HỎI 2] Năng lượng sạch là gì?", "-> Trả lời: Là điện từ mặt trời và gió."] }
+                ],
+                // Topics 11-30 follow the exact same structure for Dung
+                topic11: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss the impact of social media on students.", "It is a big part of our life.", "I will look at how it builds and destroys confidence."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận tác động của MXH với sinh viên.", "Nó là một phần lớn của đời sống.", "Tôi sẽ xem nó xây dựng và phá hủy tự tin ra sao."] },
+                    { num: 2, title: "Body 1", sub: "Giao lưu", time: "~40s", textEN: ["First, it helps students find their group.", "You can join clubs for reading or music online.", "You meet people with the same hobbies.", "It makes you feel you belong."], textVN: ["Đầu tiên, nó giúp sinh viên tìm nhóm của mình.", "Bạn có thể tham gia CLB đọc sách hay nhạc trên mạng.", "Bạn gặp người cùng sở thích.", "Nó làm bạn thấy mình thuộc về một nơi."] },
+                    { num: 3, title: "Body 2", sub: "Mất tự tin", time: "~40s", textEN: ["Second, it can destroy confidence.", "Students see perfect photos edited by apps.", "They feel they are ugly and poor.", "This creates a lot of unnecessary sadness."], textVN: ["Thứ hai, nó có thể phá hủy tự tin.", "Sinh viên thấy ảnh hoàn hảo sửa bằng app.", "Họ thấy mình xấu và nghèo.", "Điều này tạo ra nhiều nỗi buồn không đáng có."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, social media connects us but causes fake pressure.", "Remember that online life is not 100% real.", "Be confident in yourself.", "Thank you."], textVN: ["Tóm lại, MXH kết nối ta nhưng gây áp lực ảo.", "Hãy nhớ cuộc sống trên mạng không thật 100%.", "Hãy tự tin vào bản thân.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Have you ever edited photos before posting?", "-> Answer: Yes, just to make the color brighter.", "[CÂU HỎI 2] Should parents control students' social media?", "-> Answer: No, university students need privacy."], textVN: ["[CÂU HỎI 1] Bạn từng sửa ảnh trước khi đăng chưa?", "-> Trả lời: Có, chỉ làm màu sáng hơn.", "[CÂU HỎI 2] Bố mẹ có nên kiểm soát MXH của SV không?", "-> Trả lời: Không, sinh viên cần sự riêng tư."] }
+                ],
+                topic12: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic is how AI changes education.", "AI is very powerful.", "I will focus on personalized learning and writing skills."], textVN: ["Chào thầy cô.", "Chủ đề của em là AI thay đổi giáo dục ra sao.", "AI rất quyền lực.", "Em sẽ tập trung vào học cá nhân hóa và kỹ năng viết."] },
+                    { num: 2, title: "Body 1", sub: "Học cá nhân hóa", time: "~40s", textEN: ["First, AI understands each student.", "If you are bad at math, AI will give you easy math games.", "It teaches you at your own speed.", "You will not feel stressed."], textVN: ["Đầu tiên, AI hiểu từng sinh viên.", "Nếu bạn yếu toán, AI sẽ cho trò chơi toán dễ.", "Nó dạy bạn theo tốc độ của riêng bạn.", "Bạn sẽ không thấy áp lực."] },
+                    { num: 3, title: "Body 2", sub: "Bị phụ thuộc", time: "~40s", textEN: ["Second, students lose writing skills.", "Now, AI can write essays in 3 seconds.", "Students just copy and paste to the teacher.", "They forget how to write a beautiful sentence."], textVN: ["Thứ hai, sinh viên mất kỹ năng viết.", "Giờ đây, AI viết bài luận trong 3 giây.", "Sinh viên chỉ copy và dán nộp giáo viên.", "Họ quên cách viết một câu văn hay."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, AI is a patient tutor but makes us lazy writers.", "Use AI to get ideas, not to write for you.", "Keep your own creativity.", "Thank you."], textVN: ["Tóm lại, AI là gia sư kiên nhẫn nhưng làm ta lười viết.", "Dùng AI lấy ý tưởng, đừng để nó viết thay.", "Giữ sự sáng tạo của riêng bạn.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Is it cheating to use AI for homework?", "-> Answer: Yes, if you copy everything.", "[CÂU HỎI 2] Can AI grade tests?", "-> Answer: Yes, it is very fast and fair."], textVN: ["[CÂU HỎI 1] Dùng AI làm bài tập có phải gian lận?", "-> Trả lời: Đúng, nếu bạn chép mọi thứ.", "[CÂU HỎI 2] AI có chấm điểm được không?", "-> Trả lời: Có, nó rất nhanh và công bằng."] }
+                ],
+                topic13: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss time management.", "We all have 24 hours a day.", "I will talk about priorities and focus."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận quản lý thời gian.", "Chúng ta đều có 24 giờ mỗi ngày.", "Tôi sẽ nói về sự ưu tiên và tập trung."] },
+                    { num: 2, title: "Body 1", sub: "Sự ưu tiên", time: "~40s", textEN: ["First, you must know what is important.", "Do the hard homework first when you have full energy.", "Leave easy things like cleaning the room for later.", "This is called prioritization."], textVN: ["Đầu tiên, bạn phải biết cái gì quan trọng.", "Làm bài khó trước khi bạn có đầy năng lượng.", "Để việc dễ như dọn phòng lại sau.", "Đây gọi là sự ưu tiên."] },
+                    { num: 3, title: "Body 2", sub: "Sự tập trung", time: "~40s", textEN: ["Second, you must focus 100%.", "When studying, put your phone in another room.", "Do not watch Netflix while reading books.", "You will finish the work in half the time."], textVN: ["Thứ hai, bạn phải tập trung 100%.", "Khi học, để điện thoại ở phòng khác.", "Đừng xem Netflix khi đang đọc sách.", "Bạn sẽ xong việc trong một nửa thời gian."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, prioritize tasks and kill distractions.", "Time management makes you a master of your life.", "Value your time.", "Thank you."], textVN: ["Tóm lại, ưu tiên công việc và diệt sự xao nhãng.", "Quản lý thời gian làm bạn làm chủ cuộc đời.", "Trân trọng thời gian của bạn.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What distracts you the most?", "-> Answer: Definitely YouTube videos.", "[CÂU HỎI 2] Do you use a planner app?", "-> Answer: Yes, I use Google Calendar."], textVN: ["[CÂU HỎI 1] Cái gì làm bạn xao nhãng nhất?", "-> Trả lời: Chắc chắn là video YouTube.", "[CÂU HỎI 2] Bạn có dùng app lên lịch không?", "-> Trả lời: Có, tôi dùng Google Calendar."] }
+                ],
+                topic14: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic is part-time jobs for students.", "It is a popular debate.", "I will focus on soft skills and health."], textVN: ["Chào thầy cô.", "Chủ đề của em là việc làm thêm cho sinh viên.", "Đây là tranh luận phổ biến.", "Em sẽ tập trung vào kỹ năng mềm và sức khỏe."] },
+                    { num: 2, title: "Body 1", sub: "Kỹ năng mềm", time: "~40s", textEN: ["First, jobs teach you real-world skills.", "You learn how to handle angry customers in a cafe.", "You learn how to work in a team.", "Books cannot teach you this."], textVN: ["Đầu tiên, việc làm dạy bạn kỹ năng thực tế.", "Bạn học cách xử lý khách hàng giận ở quán cafe.", "Bạn học cách làm việc nhóm.", "Sách không thể dạy bạn điều này."] },
+                    { num: 3, title: "Body 2", sub: "Sức khỏe kém", time: "~40s", textEN: ["Second, it can destroy your health.", "Many jobs require standing for 8 hours.", "Students eat fast food because they have no time to cook.", "They become weak and sick."], textVN: ["Thứ hai, nó có thể phá hủy sức khỏe.", "Nhiều việc yêu cầu đứng 8 tiếng.", "Sinh viên ăn đồ ăn nhanh vì không có giờ nấu.", "Họ trở nên yếu và ốm."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, jobs bring soft skills but can harm health.", "Students must know their limits.", "Health is more important than small money.", "Thank you."], textVN: ["Tóm lại, việc làm mang lại kỹ năng nhưng hại sức khỏe.", "Sinh viên phải biết giới hạn của mình.", "Sức khỏe quan trọng hơn tiền lẻ.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What is the best part-time job?", "-> Answer: Tutoring, because it trains your brain.", "[CÂU HỎI 2] Did you ever work part-time?", "-> Answer: Yes, I worked at a milk tea shop."], textVN: ["[CÂU HỎI 1] Việc làm thêm tốt nhất là gì?", "-> Trả lời: Gia sư, vì nó rèn luyện não bạn.", "[CÂU HỎI 2] Bạn từng làm thêm chưa?", "-> Trả lời: Có, tôi từng làm ở quán trà sữa."] }
+                ],
+                topic15: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will talk about social media on mental well-being.", "Our phones control our minds.", "I will discuss fake news and dopamine."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về MXH và sức khỏe tâm lý.", "Điện thoại đang điều khiển tâm trí ta.", "Tôi sẽ thảo luận tin giả và dopamine."] },
+                    { num: 2, title: "Body 1", sub: "Tin tiêu cực", time: "~40s", textEN: ["First, the internet is full of bad news.", "Every day we read about accidents and fighting.", "This makes our brain feel unsafe and worried.", "We get anxiety."], textVN: ["Đầu tiên, mạng đầy tin tức xấu.", "Mỗi ngày ta đọc về tai nạn và đánh nhau.", "Điều này làm não bộ thấy không an toàn và lo lắng.", "Chúng ta bị chứng lo âu."] },
+                    { num: 3, title: "Body 2", sub: "Nghiện ngập", time: "~40s", textEN: ["Second, social media is addictive like a drug.", "When we get a 'Like', our brain feels short happiness.", "So we keep checking the phone every 5 minutes.", "We lose control of our life."], textVN: ["Thứ hai, MXH gây nghiện như ma túy.", "Khi có nút 'Like', não ta thấy hạnh phúc ngắn hạn.", "Nên ta liên tục check điện thoại mỗi 5 phút.", "Ta mất kiểm soát cuộc sống."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, bad news and addiction destroy our mental health.", "We should limit social media to 1 hour a day.", "Read a book instead.", "Thank you."], textVN: ["Tóm lại, tin xấu và sự nghiện phá hủy sức khỏe tâm lý.", "Ta nên giới hạn MXH 1 tiếng mỗi ngày.", "Thay vào đó hãy đọc sách.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Do you check your phone before sleeping?", "-> Answer: Yes, but I am trying to stop it.", "[CÂU HỎI 2] What makes you happy offline?", "-> Answer: Playing with my dog."], textVN: ["[CÂU HỎI 1] Bạn có xem điện thoại trước khi ngủ không?", "-> Trả lời: Có, nhưng tôi đang cố dừng lại.", "[CÂU HỎI 2] Điều gì làm bạn vui khi offline?", "-> Trả lời: Chơi với chó của tôi."] }
+                ],
+                topic16: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic is how to overcome the fear of public speaking.", "It is the number one fear in the world.", "I will share two mental tricks."], textVN: ["Chào thầy cô.", "Chủ đề của em là cách vượt qua nỗi sợ thuyết trình.", "Đó là nỗi sợ số một trên thế giới.", "Em sẽ chia sẻ 2 mẹo tâm lý."] },
+                    { num: 2, title: "Body 1", sub: "Thay đổi suy nghĩ", time: "~40s", textEN: ["First, change how you think.", "Do not think it is a test.", "Think it is just sharing a story with friends.", "If you make a mistake, nobody will kill you."], textVN: ["Đầu tiên, thay đổi cách bạn nghĩ.", "Đừng nghĩ đây là bài kiểm tra.", "Hãy nghĩ đó chỉ là chia sẻ câu chuyện với bạn bè.", "Nếu bạn mắc lỗi, không ai giết bạn đâu."] },
+                    { num: 3, title: "Body 2", sub: "Chấp nhận sự run rẩy", time: "~40s", textEN: ["Second, accept that you are nervous.", "It is normal for your hands to shake.", "Tell yourself: 'I am excited, not scared'.", "Use that energy to speak louder."], textVN: ["Thứ hai, chấp nhận rằng bạn đang run.", "Tay bị run là chuyện bình thường.", "Hãy nói với bản thân: 'Mình đang phấn khích, không phải sợ'.", "Dùng năng lượng đó để nói to hơn."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, think positively and accept your nervous energy.", "Speaking is sharing, not performing.", "Be brave.", "Thank you."], textVN: ["Tóm lại, nghĩ tích cực và chấp nhận sự hồi hộp.", "Nói là chia sẻ, không phải biểu diễn.", "Hãy dũng cảm.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What if you forget the script?", "-> Answer: I will look at my cue cards.", "[CÂU HỎI 2] Does eye contact help?", "-> Answer: Yes, looking at kind people helps me relax."], textVN: ["[CÂU HỎI 1] Nếu bạn quên kịch bản thì sao?", "-> Trả lời: Tôi sẽ nhìn vào thẻ gợi ý.", "[CÂU HỎI 2] Giao tiếp mắt có giúp ích không?", "-> Trả lời: Có, nhìn người hiền lành giúp tôi thư giãn."] }
+                ],
+                topic17: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will talk about Online Learning vs Traditional Classroom.", "Since COVID-19, online learning is everywhere.", "I will compare their flexibility and quality."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về Học online vs Lớp truyền thống.", "Từ đợt COVID-19, học online ở khắp nơi.", "Tôi sẽ so sánh sự linh hoạt và chất lượng của chúng."] },
+                    { num: 2, title: "Body 1", sub: "Sự linh hoạt", time: "~40s", textEN: ["First, online learning is super flexible.", "You can record the lesson and watch it again.", "You can study while drinking coffee at a cafe.", "It saves a lot of time."], textVN: ["Đầu tiên, học online siêu linh hoạt.", "Bạn có thể ghi hình bài và xem lại.", "Bạn có thể học khi đang uống cafe ở quán.", "Nó tiết kiệm rất nhiều thời gian."] },
+                    { num: 3, title: "Body 2", sub: "Chất lượng thực hành", time: "~40s", textEN: ["Second, traditional learning has better quality for practice.", "If you study medicine or chemistry, you need a real lab.", "You cannot do experiments on a computer screen.", "Real classes are a must for these majors."], textVN: ["Thứ hai, học truyền thống có chất lượng thực hành tốt hơn.", "Nếu học y hoặc hóa, bạn cần phòng thí nghiệm thật.", "Bạn không thể làm thí nghiệm trên màn hình máy tính.", "Lớp thật là bắt buộc cho các ngành này."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, online is flexible but traditional is better for practice.", "The best way is to combine both.", "Thank you."], textVN: ["Tóm lại, online thì linh hoạt nhưng truyền thống tốt hơn để thực hành.", "Cách tốt nhất là kết hợp cả hai.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Is online learning cheaper?", "-> Answer: Yes, because you don't pay for school electricity.", "[CÂU HỎI 2] Can you make friends online?", "-> Answer: Yes, but it is not as deep as real life."], textVN: ["[CÂU HỎI 1] Học online có rẻ hơn không?", "-> Trả lời: Có, vì bạn không trả tiền điện cho trường.", "[CÂU HỎI 2] Bạn có thể kết bạn online không?", "-> Trả lời: Có, nhưng không sâu sắc bằng ngoài đời."] }
+                ],
+                topic18: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic today is the importance of learning English.", "It is the bridge to the world.", "I will talk about technology and understanding."], textVN: ["Chào thầy cô.", "Chủ đề của em hôm nay là tầm quan trọng của học tiếng Anh.", "Nó là cây cầu ra thế giới.", "Em sẽ nói về công nghệ và sự thấu hiểu."] },
+                    { num: 2, title: "Body 1", sub: "Công nghệ", time: "~40s", textEN: ["First, English is the language of technology.", "All programming codes and software are in English.", "If you want to be an IT engineer, you must know it.", "It keeps you updated with the future."], textVN: ["Đầu tiên, tiếng Anh là ngôn ngữ của công nghệ.", "Mọi mã lập trình và phần mềm đều bằng tiếng Anh.", "Nếu muốn làm kỹ sư IT, bạn phải biết nó.", "Nó giữ bạn cập nhật với tương lai."] },
+                    { num: 3, title: "Body 2", sub: "Thấu hiểu toàn cầu", time: "~40s", textEN: ["Second, it brings global understanding.", "We can read news from CNN or BBC directly.", "We know what is happening in the world without translation.", "It makes us global citizens."], textVN: ["Thứ hai, nó mang lại sự thấu hiểu toàn cầu.", "Ta có thể đọc tin từ CNN hay BBC trực tiếp.", "Ta biết chuyện gì đang xảy ra trên TG mà không cần dịch.", "Nó làm ta thành công dân toàn cầu."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, English is needed for technology and world knowledge.", "It makes you smarter and connected.", "Learn it with passion.", "Thank you."], textVN: ["Tóm lại, tiếng Anh cần cho công nghệ và kiến thức thế giới.", "Nó làm bạn thông minh và được kết nối.", "Hãy học nó với đam mê.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Will AI translation make learning English useless?", "-> Answer: No, talking to real people needs real emotion.", "[CÂU HỎI 2] How often do you practice English?", "-> Answer: I practice a little bit every evening."], textVN: ["[CÂU HỎI 1] AI dịch thuật có làm việc học TA vô ích không?", "-> Trả lời: Không, nói chuyện với người thật cần cảm xúc thật.", "[CÂU HỎI 2] Bạn luyện TA thường xuyên thế nào?", "-> Trả lời: Tôi luyện một chút mỗi buổi tối."] }
+                ],
+                topic19: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss how technology is changing communication.", "We are more connected but also more isolated.", "I will explain this."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận công nghệ thay đổi giao tiếp ra sao.", "Ta được kết nối nhiều hơn nhưng cũng cô lập hơn.", "Tôi sẽ giải thích điều này."] },
+                    { num: 2, title: "Body 1", sub: "Khoảng cách biến mất", time: "~40s", textEN: ["First, distance is not a problem anymore.", "My sister lives in Australia, but I see her every day on Zoom.", "We can share pictures instantly.", "The world is like a small village."], textVN: ["Đầu tiên, khoảng cách không còn là vấn đề nữa.", "Chị tôi sống ở Úc, nhưng tôi thấy chị mỗi ngày trên Zoom.", "Chúng tôi có thể chia sẻ ảnh ngay lập tức.", "Thế giới giống như một ngôi làng nhỏ."] },
+                    { num: 3, title: "Body 2", sub: "Mất cảm xúc", time: "~40s", textEN: ["Second, written text has no emotion.", "When we text, people cannot see our face or hear our voice.", "A joke can become an insult.", "It creates many misunderstandings."], textVN: ["Thứ hai, văn bản viết không có cảm xúc.", "Khi nhắn tin, người ta không thấy mặt hay nghe giọng ta.", "Một trò đùa có thể thành lời xúc phạm.", "Nó tạo ra nhiều sự hiểu lầm."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, technology makes communication global but removes emotions.", "Use emojis or make a call when it is important.", "Thank you."], textVN: ["Tóm lại, công nghệ làm giao tiếp toàn cầu nhưng xóa đi cảm xúc.", "Hãy dùng emoji hoặc gọi điện khi có việc quan trọng.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What app do you use to communicate?", "-> Answer: I use Zalo and Messenger.", "[CÂU HỎI 2] Have you ever misunderstood a text?", "-> Answer: Yes, I thought my friend was angry but she was just busy."], textVN: ["[CÂU HỎI 1] Bạn dùng app nào để giao tiếp?", "-> Trả lời: Tôi dùng Zalo và Messenger.", "[CÂU HỎI 2] Bạn từng hiểu lầm tin nhắn chưa?", "-> Trả lời: Có, tôi tưởng bạn tôi giận nhưng cô ấy chỉ đang bận."] }
+                ],
+                topic20: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic is the importance of Critical Thinking.", "It means you don't accept everything blindly.", "I will talk about creativity and independence."], textVN: ["Chào thầy cô.", "Chủ đề của em là tầm quan trọng của Tư duy phản biện.", "Nó nghĩa là bạn không chấp nhận mọi thứ mù quáng.", "Em sẽ nói về sự sáng tạo và độc lập."] },
+                    { num: 2, title: "Body 1", sub: "Sự sáng tạo", time: "~40s", textEN: ["First, it builds creativity.", "Critical thinkers always ask: 'Is there a better way?'", "They invent new tools and ideas.", "They do not follow the boring old rules."], textVN: ["Đầu tiên, nó xây dựng sự sáng tạo.", "Người có tư duy phản biện luôn hỏi: 'Có cách nào tốt hơn không?'", "Họ phát minh công cụ và ý tưởng mới.", "Họ không làm theo những luật lệ cũ nhàm chán."] },
+                    { num: 3, title: "Body 2", sub: "Sự độc lập", time: "~40s", textEN: ["Second, it makes you independent.", "You don't need your parents to tell you what is right or wrong.", "You analyze the problem yourself.", "You take control of your own life."], textVN: ["Thứ hai, nó làm bạn độc lập.", "Bạn không cần cha mẹ bảo cái gì đúng sai.", "Bạn tự phân tích vấn đề.", "Bạn kiểm soát cuộc đời của chính mình."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, critical thinking makes you creative and independent.", "It is the best weapon for a student.", "Use your brain deeply.", "Thank you."], textVN: ["Tóm lại, tư duy phản biện làm bạn sáng tạo và độc lập.", "Đó là vũ khí tốt nhất cho sinh viên.", "Hãy dùng não của bạn thật sâu.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Can critical thinking make you look arrogant?", "-> Answer: Only if you argue rudely. We must be polite.", "[CÂU HỎI 2] How to teach kids to think critically?", "-> Answer: Ask them 'Why?' often."], textVN: ["[CÂU HỎI 1] Tư duy phản biện có làm bạn trông kiêu ngạo không?", "-> Trả lời: Chỉ khi bạn cãi thô lỗ. Ta phải lịch sự.", "[CÂU HỎI 2] Làm sao dạy trẻ em tư duy phản biện?", "-> Trả lời: Hỏi chúng 'Tại sao?' thường xuyên."] }
+                ],
+                topic21: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss if university attendance should be mandatory.", "Many students skip classes.", "I will look at the value of lectures and self-study."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận liệu đi học đại học có nên bắt buộc.", "Nhiều sinh viên cúp học.", "Tôi sẽ xem xét giá trị bài giảng và tự học."] },
+                    { num: 2, title: "Body 1", sub: "Giá trị lớp học", time: "~40s", textEN: ["First, going to class has a unique value.", "Teachers give tips that are not in the book.", "You can discuss with classmates.", "This interactive environment cannot be replaced."], textVN: ["Đầu tiên, đến lớp có giá trị độc nhất.", "Giáo viên cho mẹo không có trong sách.", "Bạn có thể thảo luận với bạn cùng lớp.", "Môi trường tương tác này không thể thay thế."] },
+                    { num: 3, title: "Body 2", sub: "Sinh viên đi làm", time: "~40s", textEN: ["But second, many students must work to pay fee.", "If attendance is mandatory, they will lose their jobs.", "Some students are smart enough to study at home and pass.", "They need flexibility."], textVN: ["Nhưng thứ hai, nhiều SV phải đi làm trả học phí.", "Nếu bắt buộc đi học, họ sẽ mất việc.", "Vài SV đủ thông minh để tự học ở nhà và qua môn.", "Họ cần sự linh hoạt."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, attendance is good but should not be forced 100%.", "Universities should reward students who attend, not punish those who don't.", "Thank you."], textVN: ["Tóm lại, đi học là tốt nhưng không nên ép 100%.", "Đại học nên thưởng người đi học, không phạt người vắng.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Do you think rolling call wastes time?", "-> Answer: Yes, it takes 15 minutes of the class.", "[CÂU HỎI 2] Should attendance be 50% of the grade?", "-> Answer: No, exams are more important."], textVN: ["[CÂU HỎI 1] Bạn có nghĩ điểm danh tốn thời gian không?", "-> Trả lời: Có, nó tốn 15 phút của lớp.", "[CÂU HỎI 2] Điểm chuyên cần có nên chiếm 50% điểm không?", "-> Trả lời: Không, bài thi quan trọng hơn."] }
+                ],
+                topic22: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic today is the influence of influencers.", "They have millions of followers.", "I will focus on lifestyle and mental health impacts."], textVN: ["Chào thầy cô.", "Chủ đề của em hôm nay là ảnh hưởng của influencer.", "Họ có hàng triệu người theo dõi.", "Em sẽ tập trung vào tác động lối sống và tâm lý."] },
+                    { num: 2, title: "Body 1", sub: "Định hình lối sống", time: "~40s", textEN: ["First, they shape how young people live.", "If an influencer promotes green living, followers will stop using plastic.", "They have the power to create good social movements.", "They spread good messages quickly."], textVN: ["Đầu tiên, họ định hình cách người trẻ sống.", "Nếu influencer ủng hộ sống xanh, người theo dõi sẽ ngừng dùng nhựa.", "Họ có quyền lực tạo ra phong trào xã hội tốt.", "Họ lan truyền thông điệp tốt nhanh chóng."] },
+                    { num: 3, title: "Body 2", sub: "Lối sống ảo", time: "~40s", textEN: ["Second, they can create fake standards.", "They post pictures of expensive cars and luxury bags.", "Young people feel poor and stressed.", "Some even borrow money to live like their idols."], textVN: ["Thứ hai, họ có thể tạo tiêu chuẩn ảo.", "Họ đăng ảnh siêu xe và túi hàng hiệu.", "Người trẻ thấy nghèo và áp lực.", "Vài người thậm chí vay tiền để sống như thần tượng."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, influencers can lead us to good habits or fake dreams.", "Choose who you follow carefully.", "Don't lose your true self.", "Thank you."], textVN: ["Tóm lại, influencer có thể dẫn ta đến thói quen tốt hoặc giấc mơ ảo.", "Hãy chọn người để theo dõi cẩn thận.", "Đừng đánh mất bản thân thực sự.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Do you want to be an influencer?", "-> Answer: No, I want a quiet and private life.", "[CÂU HỎI 2] Why do brands use influencers?", "-> Answer: Because they can sell products very fast."], textVN: ["[CÂU HỎI 1] Bạn có muốn làm influencer không?", "-> Trả lời: Không, tôi muốn cuộc sống yên tĩnh và riêng tư.", "[CÂU HỎI 2] Sao các nhãn hàng dùng influencer?", "-> Trả lời: Vì họ có thể bán hàng rất nhanh."] }
+                ],
+                topic23: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will talk about how to build good habits.", "Our habits define our future.", "I will share the rule of environment and consistency."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về cách xây dựng thói quen tốt.", "Thói quen định hình tương lai chúng ta.", "Tôi sẽ chia sẻ quy tắc môi trường và sự kiên trì."] },
+                    { num: 2, title: "Body 1", sub: "Thay đổi môi trường", time: "~40s", textEN: ["First, change your environment.", "If you want to read, put a book on your pillow.", "If you want to diet, throw away all the candy.", "Make the good habits easy to see and do."], textVN: ["Đầu tiên, thay đổi môi trường của bạn.", "Nếu muốn đọc, hãy để sách trên gối.", "Nếu muốn ăn kiêng, vứt hết kẹo đi.", "Hãy làm cho thói quen tốt dễ thấy và dễ làm."] },
+                    { num: 3, title: "Body 2", sub: "Kiên trì vượt qua khó khăn", time: "~40s", textEN: ["Second, be consistent when it is hard.", "The first week is always terrible.", "Your brain will tell you to stop.", "You must fight it and do it anyway.", "Only consistency builds habits."], textVN: ["Thứ hai, kiên trì khi gặp khó khăn.", "Tuần đầu tiên luôn luôn tồi tệ.", "Não bạn sẽ bảo bạn dừng lại.", "Bạn phải chiến đấu với nó và cứ làm.", "Chỉ có sự kiên trì mới xây dựng được thói quen."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, setup your environment and never give up in the first week.", "Small daily habits build a great life.", "Start today.", "Thank you."], textVN: ["Tóm lại, thiết lập môi trường và không bỏ cuộc tuần đầu.", "Thói quen nhỏ hàng ngày xây cuộc sống tuyệt vời.", "Bắt đầu ngay hôm nay.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What habit do you want to build now?", "-> Answer: I want to wake up at 5 AM.", "[CÂU HỎI 2] How many days does it take to form a habit?", "-> Answer: People say it takes 21 days."], textVN: ["[CÂU HỎI 1] Bạn muốn xây thói quen gì bây giờ?", "-> Trả lời: Tôi muốn dậy lúc 5 giờ sáng.", "[CÂU HỎI 2] Tốn bao nhiêu ngày để hình thành thói quen?", "-> Trả lời: Người ta nói tốn 21 ngày."] }
+                ],
+                topic24: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic is the importance of body language.", "Words are only 10% of communication.", "I will discuss eye contact and posture."], textVN: ["Chào thầy cô.", "Chủ đề của em là tầm quan trọng của ngôn ngữ cơ thể.", "Lời nói chỉ chiếm 10% của giao tiếp.", "Em sẽ thảo luận giao tiếp mắt và tư thế."] },
+                    { num: 2, title: "Body 1", sub: "Giao tiếp mắt", time: "~40s", textEN: ["First, eye contact shows honesty.", "If you look away when speaking, people think you are lying.", "Looking into their eyes shows respect.", "It makes the connection much stronger."], textVN: ["Đầu tiên, giao tiếp mắt thể hiện sự trung thực.", "Nếu nhìn chỗ khác khi nói, người ta nghĩ bạn nói dối.", "Nhìn vào mắt họ thể hiện sự tôn trọng.", "Nó làm sự kết nối mạnh mẽ hơn nhiều."] },
+                    { num: 3, title: "Body 2", sub: "Tư thế cởi mở", time: "~40s", textEN: ["Second, open posture welcomes people.", "Do not cross your arms.", "Use open hands to explain your ideas.", "It makes people feel comfortable to talk to you."], textVN: ["Thứ hai, tư thế cởi mở chào đón mọi người.", "Đừng khoanh tay.", "Dùng bàn tay mở để giải thích ý tưởng.", "Nó làm mọi người thấy thoải mái khi nói với bạn."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, good eye contact and open hands make communication perfect.", "Your body speaks before you open your mouth.", "Control it well.", "Thank you."], textVN: ["Tóm lại, giao tiếp mắt tốt và tay mở làm giao tiếp hoàn hảo.", "Cơ thể bạn lên tiếng trước khi bạn mở miệng.", "Hãy kiểm soát nó tốt.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Can you read someone's body language?", "-> Answer: Yes, if they tap their feet, they are impatient.", "[CÂU HỎI 2] Is smiling important?", "-> Answer: Yes, smiling is the best body language."], textVN: ["[CÂU HỎI 1] Bạn có đọc được ngôn ngữ cơ thể ai không?", "-> Trả lời: Có, nếu họ nhịp chân, họ đang mất kiên nhẫn.", "[CÂU HỎI 2] Mỉm cười có quan trọng không?", "-> Trả lời: Có, cười là ngôn ngữ cơ thể tốt nhất."] }
+                ],
+                topic25: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will talk about Climate Change and Youth's Responsibility.", "The older generation made the planet hot.", "But the youth must fix it."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ nói về Biến đổi khí hậu và Trách nhiệm người trẻ.", "Thế hệ trước làm hành tinh nóng lên.", "Nhưng người trẻ phải sửa nó."] },
+                    { num: 2, title: "Body 1", sub: "Sức mạnh công nghệ", time: "~40s", textEN: ["First, young people have technology.", "We can create global campaigns on Instagram or TikTok.", "Millions of people can join to plant trees in one day.", "Our voice is very loud online."], textVN: ["Đầu tiên, người trẻ có công nghệ.", "Ta có thể tạo chiến dịch toàn cầu trên Insta hay TikTok.", "Hàng triệu người có thể tham gia trồng cây trong 1 ngày.", "Tiếng nói của ta trên mạng rất to."] },
+                    { title: "Body 2", num: 3, sub: "Sáng tạo xanh", time: "~40s", textEN: ["Second, youth has creative minds.", "Young engineers are inventing clean energy and biodegradable plastics.", "We refuse to work for companies that pollute the environment.", "We force businesses to change."], textVN: ["Thứ hai, người trẻ có trí óc sáng tạo.", "Kỹ sư trẻ đang phát minh năng lượng sạch và nhựa tự phân hủy.", "Ta từ chối làm cho công ty làm ô nhiễm.", "Ta ép các doanh nghiệp phải thay đổi."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, technology and creativity are our weapons against climate change.", "It is our future home.", "We must take responsibility now.", "Thank you."], textVN: ["Tóm lại, công nghệ và sáng tạo là vũ khí chống biến đổi khí hậu.", "Đó là ngôi nhà tương lai của ta.", "Ta phải chịu trách nhiệm ngay bây giờ.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Do you think the Earth will be completely destroyed?", "-> Answer: No, I believe human will find a way to save it.", "[CÂU HỎI 2] What is your green habit?", "-> Answer: I sort my trash for recycling."], textVN: ["[CÂU HỎI 1] Bạn có nghĩ Trái đất sẽ bị hủy diệt hoàn toàn?", "-> Trả lời: Không, tôi tin con người sẽ tìm ra cách cứu nó.", "[CÂU HỎI 2] Thói quen xanh của bạn là gì?", "-> Trả lời: Tôi phân loại rác để tái chế."] }
+                ],
+                topic26: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic today is the benefits of traveling for students.", "University is not just about books.", "I will focus on self-discovery and stress relief."], textVN: ["Chào thầy cô.", "Chủ đề của em hôm nay là lợi ích du lịch cho sinh viên.", "Đại học không chỉ là sách vở.", "Em sẽ tập trung vào khám phá bản thân và giảm stress."] },
+                    { num: 2, title: "Body 1", sub: "Khám phá bản thân", time: "~40s", textEN: ["First, traveling helps you find yourself.", "When you are in a strange place, you face new situations.", "You discover what you truly like and dislike.", "It helps you choose your future career."], textVN: ["Đầu tiên, du lịch giúp bạn tìm thấy chính mình.", "Khi ở nơi xa lạ, bạn đối mặt tình huống mới.", "Bạn khám phá ra mình thực sự thích và ghét gì.", "Nó giúp bạn chọn nghề nghiệp tương lai."] },
+                    { num: 3, title: "Body 2", sub: "Nạp lại năng lượng", time: "~40s", textEN: ["Second, it completely relieves stress.", "After final exams, your brain is exhausted.", "Breathing fresh air in the mountains heals your mind.", "You come back to school with 100% energy."], textVN: ["Thứ hai, nó hoàn toàn xả stress.", "Sau thi cuối kỳ, não bạn cạn kiệt.", "Hít thở khí trời trên núi chữa lành tâm trí bạn.", "Bạn quay lại trường với 100% năng lượng."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, travel is a journey to find yourself and recharge.", "Money spent on travel is an investment.", "Go out and see the world.", "Thank you."], textVN: ["Tóm lại, du lịch là hành trình tìm bản thân và sạc năng lượng.", "Tiền tiêu cho du lịch là một khoản đầu tư.", "Hãy đi ra ngoài và xem thế giới.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Have you ever traveled abroad?", "-> Answer: Not yet, but I want to go to Thailand.", "[CÂU HỎI 2] Do you prefer planned or spontaneous trips?", "-> Answer: Planned trips because I want everything perfect."], textVN: ["[CÂU HỎI 1] Bạn từng đi du lịch nước ngoài chưa?", "-> Trả lời: Chưa, nhưng tôi muốn đi Thái Lan.", "[CÂU HỎI 2] Bạn thích chuyến đi lên lịch sẵn hay ngẫu hứng?", "-> Trả lời: Lên lịch sẵn vì tôi muốn mọi thứ hoàn hảo."] }
+                ],
+                topic27: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss how music affects our mood and productivity.", "Music is a language everyone understands.", "I will explain its power on emotions and work."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận nhạc ảnh hưởng tâm trạng và năng suất ra sao.", "Âm nhạc là ngôn ngữ ai cũng hiểu.", "Tôi sẽ giải thích sức mạnh của nó lên cảm xúc và công việc."] },
+                    { num: 2, title: "Body 1", sub: "Kiểm soát cảm xúc", time: "~40s", textEN: ["First, music controls emotions.", "Listening to sad songs when you cry can make you feel understood.", "Listening to energetic rock makes you want to go to the gym.", "It easily changes your brain waves."], textVN: ["Đầu tiên, âm nhạc kiểm soát cảm xúc.", "Nghe nhạc buồn khi khóc có thể làm bạn thấy được thấu hiểu.", "Nghe nhạc rock sôi động làm bạn muốn đi gym.", "Nó dễ dàng thay đổi sóng não của bạn."] },
+                    { num: 3, title: "Body 2", sub: "Tăng năng suất làm việc", time: "~40s", textEN: ["Second, it boots productivity for boring tasks.", "If you have to clean the house or type data, music makes it fun.", "Time passes much faster.", "You work like a happy machine."], textVN: ["Thứ hai, nó tăng năng suất cho việc nhàm chán.", "Nếu phải dọn nhà hay gõ dữ liệu, nhạc làm nó vui hơn.", "Thời gian trôi nhanh hơn nhiều.", "Bạn làm việc như một cái máy vui vẻ."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, music is a tool to change feelings and work faster.", "Put on your headphones and enjoy.", "Life is better with a soundtrack.", "Thank you."], textVN: ["Tóm lại, nhạc là công cụ để đổi cảm xúc và làm nhanh hơn.", "Đeo tai nghe vào và thưởng thức.", "Cuộc sống tốt hơn khi có nhạc nền.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Do you sing when you listen to music?", "-> Answer: Yes, especially in the shower.", "[CÂU HỎI 2] Can music distract you?", "-> Answer: Yes, if the song has too many lyrics."], textVN: ["[CÂU HỎI 1] Bạn có hát khi nghe nhạc không?", "-> Trả lời: Có, nhất là lúc tắm.", "[CÂU HỎI 2] Nhạc có làm xao nhãng không?", "-> Trả lời: Có, nếu bài hát có quá nhiều lời."] }
+                ],
+                topic28: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My topic today is the importance of teamwork.", "In the modern world, nobody can win alone.", "I will talk about diverse skills and support."], textVN: ["Chào thầy cô.", "Chủ đề của em hôm nay là tầm quan trọng của làm việc nhóm.", "Ở TG hiện đại, không ai thắng một mình.", "Em sẽ nói về đa dạng kỹ năng và sự hỗ trợ."] },
+                    { num: 2, title: "Body 1", sub: "Đa dạng kỹ năng", time: "~40s", textEN: ["First, a team has diverse skills.", "One person is good at writing, another is good at designing.", "When they combine, the result is amazing.", "A team covers all weaknesses."], textVN: ["Đầu tiên, một nhóm có đa dạng kỹ năng.", "Người giỏi viết, người giỏi thiết kế.", "Khi kết hợp, kết quả thật kinh ngạc.", "Một nhóm bù đắp mọi điểm yếu."] },
+                    { num: 3, title: "Body 2", sub: "Hỗ trợ tinh thần", time: "~40s", textEN: ["Second, it provides mental support.", "When a project fails, working alone makes you want to quit.", "But in a team, members cheer each other up.", "You have the courage to fight again."], textVN: ["Thứ hai, nó cung cấp hỗ trợ tinh thần.", "Khi dự án thất bại, làm một mình làm bạn muốn bỏ cuộc.", "Nhưng trong nhóm, các thành viên cổ vũ nhau.", "Bạn có dũng khí để chiến đấu tiếp."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, teamwork brings different talents together and gives mental strength.", "Learn how to be a good team player.", "Together everyone achieves more.", "Thank you."], textVN: ["Tóm lại, nhóm kết hợp các tài năng khác nhau và cho sức mạnh tinh thần.", "Học cách làm thành viên nhóm tốt.", "Cùng nhau mọi người đạt được nhiều hơn.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] What if one member is lazy?", "-> Answer: The leader must talk to them strictly.", "[CÂU HỎI 2] Are you a good team leader?", "-> Answer: I try my best to listen to everyone."], textVN: ["[CÂU HỎI 1] Nếu một thành viên lười thì sao?", "-> Trả lời: Trưởng nhóm phải nói chuyện nghiêm khắc với họ.", "[CÂU HỎI 2] Bạn có phải trưởng nhóm tốt không?", "-> Trả lời: Tôi cố gắng hết sức nghe mọi người."] }
+                ],
+                topic29: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello everyone.", "Today I will discuss if students should use smartphones in class.", "Phones are like mini computers.", "I will focus on interactive learning and emergencies."], textVN: ["Chào mọi người.", "Hôm nay tôi sẽ thảo luận SV có nên dùng điện thoại trong lớp.", "Điện thoại như máy tính mini.", "Tôi sẽ tập trung vào học tương tác và khẩn cấp."] },
+                    { num: 2, title: "Body 1", sub: "Học tương tác", time: "~40s", textEN: ["First, phones make learning interactive.", "Teachers can use apps like Kahoot to make quizzes.", "Students answer on their phones.", "The class becomes very exciting and fun."], textVN: ["Đầu tiên, ĐT làm việc học mang tính tương tác.", "Giáo viên có thể dùng app như Kahoot làm câu đố.", "SV trả lời trên ĐT của họ.", "Lớp học trở nên rất hào hứng và vui."] },
+                    { num: 3, title: "Body 2", sub: "Trường hợp khẩn cấp", time: "~40s", textEN: ["Second, phones are needed for emergencies.", "If a student feels sick, they can call their parents silently.", "Or they can receive urgent messages from family.", "It keeps students safe."], textVN: ["Thứ hai, ĐT cần thiết cho trường hợp khẩn cấp.", "Nếu SV thấy ốm, họ có thể gọi phụ huynh trong im lặng.", "Hoặc họ nhận tin nhắn gấp từ gia đình.", "Nó giữ SV an toàn."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["In conclusion, phones bring interactive fun and safety.", "They should not be banned, but strictly managed.", "Use it wisely.", "Thank you."], textVN: ["Tóm lại, ĐT mang lại niềm vui tương tác và an toàn.", "Không nên cấm, mà nên quản lý nghiêm.", "Dùng nó khôn ngoan.", "Cảm ơn."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] How can teachers stop students from playing games?", "-> Answer: Teachers should walk around the class.", "[CÂU HỎI 2] Have you played Kahoot?", "-> Answer: Yes, I love competing with friends."], textVN: ["[CÂU HỎI 1] Làm sao GV ngăn SV chơi game?", "-> Trả lời: GV nên đi vòng quanh lớp.", "[CÂU HỎI 2] Bạn từng chơi Kahoot chưa?", "-> Trả lời: Rồi, tôi thích đua với bạn bè."] }
+                ],
+                topic30: [
+                    { num: 1, title: "Intro", sub: "Mở đầu", time: "~30s", textEN: ["Hello teacher.", "My final topic today is: What makes a great leader?", "Leading is hard.", "I will talk about vision and empathy."], textVN: ["Chào thầy cô.", "Chủ đề cuối của em là: Điều gì làm nên lãnh đạo vĩ đại?", "Lãnh đạo thì khó.", "Em sẽ nói về tầm nhìn và sự thấu cảm."] },
+                    { num: 2, title: "Body 1", sub: "Tầm nhìn xa", time: "~40s", textEN: ["First, a great leader must have a vision.", "They see the future.", "They know exactly where the team needs to go.", "They draw a clear map for everyone to follow."], textVN: ["Đầu tiên, lãnh đạo vĩ đại phải có tầm nhìn.", "Họ nhìn thấy tương lai.", "Họ biết chính xác nhóm cần đi đâu.", "Họ vẽ bản đồ rõ ràng cho mọi người theo."] },
+                    { num: 3, title: "Body 2", sub: "Sự thấu cảm", time: "~40s", textEN: ["Second, they must have empathy.", "They understand the feelings of their workers.", "If a worker is tired, the leader gives them a break.", "They lead with a warm heart, not a cold rule."], textVN: ["Thứ hai, họ phải có sự thấu cảm.", "Họ hiểu cảm xúc của nhân viên.", "Nếu nhân viên mệt, lãnh đạo cho họ nghỉ.", "Họ lãnh đạo bằng trái tim ấm, không phải luật lệ lạnh lùng."] },
+                    { num: 4, title: "Conclusion", sub: "Kết luận", time: "~30s", textEN: ["To sum up, vision shows the way, and empathy keeps the team together.", "A boss says 'Go', a leader says 'Let's go'.", "Thank you for listening."], textVN: ["Tóm lại, tầm nhìn chỉ đường, và thấu cảm giữ nhóm lại với nhau.", "Sếp nói 'Đi đi', lãnh đạo nói 'Cùng đi nào'.", "Cảm ơn đã lắng nghe."] },
+                    { num: 5, title: "Q&A Predictions", sub: "Dự đoán Q&A", time: "~1m", textEN: ["[CÂU HỎI 1] Is vision more important than empathy?", "-> Answer: I think both are equally important.", "[CÂU HỎI 2] Can a quiet person be a leader?", "-> Answer: Yes, because they are usually very good listeners."], textVN: ["[CÂU HỎI 1] Tầm nhìn có quan trọng hơn thấu cảm không?", "-> Trả lời: Tôi nghĩ cả hai quan trọng ngang nhau.", "[CÂU HỎI 2] Người trầm tính làm lãnh đạo được không?", "-> Trả lời: Được, vì họ thường là người lắng nghe rất giỏi."] }
                 ]
             }
         };
 
-        /* State Management Variables */
-        let currentSpeakerKey = 'cam';
-        let currentSlideIndex = 0;
-        let viewMode = 'card'; // 'card' | 'prompter'
-        let fontSizeLevel = 1; // 0: sm, 1: md, 2: lg, 3: xl
+        let currentSpeaker = 'cam';
+        let currentTopic = 'topic1';
+        let currentSlideIdx = 0;
+        let viewMode = 'card';
+        let fontSizeIdx = 1;
+        let currentLang = 'EN'; // Ngôn ngữ mặc định
         const fontClasses = ['speech-text-sm', 'speech-text-md', 'speech-text-lg', 'speech-text-xl'];
-        const fontSizeLabels = ['SM', 'MD', 'LG', 'XL'];
 
-        /* Timer Variables */
-        let isTimerRunning = false;
-        let timerSeconds = 0;
-        let timerInterval = null;
+        function initApp() {
+            updateTabs();
+            renderSlide();
+        }
 
-        /* Teleprompter Scrolling Variables */
-        let isAutoScrolling = false;
-        let scrollInterval = null;
-        let scrollSpeed = 3;
-
-        // Speaker switching
-        function switchSpeaker(speakerKey) {
-            currentSpeakerKey = speakerKey;
-            currentSlideIndex = 0;
-            updateSpeakerHeader();
-            updateTabStyles();
-            
-            if (viewMode === 'card') {
-                renderCurrentSlideCard();
+        // Đổi ngôn ngữ EN / VN
+        function toggleLang() {
+            currentLang = currentLang === 'EN' ? 'VN' : 'EN';
+            const langText = document.getElementById('lang-text');
+            if (currentLang === 'EN') {
+                langText.innerText = "Dịch VN";
             } else {
-                renderPrompterView();
+                langText.innerText = "Hiện EN";
             }
+            renderSlide();
         }
 
-        // Update speaker header info
-        function updateSpeakerHeader() {
-            const speaker = scriptsData[currentSpeakerKey];
-            document.getElementById('speaker-name').innerText = speaker.name;
-            document.getElementById('speaker-topic').innerHTML = `Chủ đề: <span class="text-slate-200 font-medium">${speaker.topic}</span>`;
-            document.getElementById('target-duration').innerText = speaker.targetTime;
-            document.getElementById('total-slides-count').innerText = `${speaker.slides.length} Slides`;
-            
-            const badge = document.getElementById('speaker-badge');
-            badge.className = `px-2.5 py-0.5 rounded-full text-xs font-bold border ${speaker.badgeColor}`;
+        // Lấy dữ liệu an toàn, nếu Topic chưa có nội dung sẽ hiển thị báo lỗi thay vì crash App
+        function getSlidesData() {
+            if (db[currentSpeaker] && db[currentSpeaker][currentTopic]) {
+                return db[currentSpeaker][currentTopic];
+            }
+            return [
+                { num: 1, title: "Cần Cập Nhật", sub: "Missing Data", time: "~0s", 
+                  textEN: ["You have not added content for this topic yet.", "Please add it in the source code."],
+                  textVN: ["Bạn chưa thêm nội dung cho chủ đề này.", "Vui lòng sao chép cấu trúc và thêm vào mã nguồn (Code)."]
+                }
+            ];
         }
 
-        // Tab styles update
-        function updateTabStyles() {
+        function switchSpeaker(speaker) {
+            currentSpeaker = speaker;
+            currentSlideIdx = 0;
+            updateTabs();
+            renderSlide();
+        }
+
+        function changeTopic() {
+            currentTopic = document.getElementById('topic-selector').value;
+            currentSlideIdx = 0;
+            renderSlide();
+        }
+
+        function updateTabs() {
             const camBtn = document.getElementById('tab-cam');
             const dungBtn = document.getElementById('tab-dung');
-
-            if (currentSpeakerKey === 'cam') {
-                camBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-500 whitespace-nowrap active:scale-95 transition-all";
-                dungBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-slate-900/80 hover:bg-slate-800 text-slate-400 border border-slate-800 whitespace-nowrap active:scale-95 transition-all";
+            
+            if(currentSpeaker === 'cam') {
+                camBtn.className = "flex-1 md:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all bg-indigo-600 text-white shadow-md";
+                dungBtn.className = "flex-1 md:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all text-slate-400 hover:text-white hover:bg-slate-800";
             } else {
-                dungBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 border border-emerald-500 whitespace-nowrap active:scale-95 transition-all";
-                camBtn.className = "tab-btn flex items-center space-x-2.5 px-4 py-2.5 rounded-xl font-bold text-sm bg-slate-900/80 hover:bg-slate-800 text-slate-400 border border-slate-800 whitespace-nowrap active:scale-95 transition-all";
+                dungBtn.className = "flex-1 md:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all bg-emerald-600 text-white shadow-md";
+                camBtn.className = "flex-1 md:flex-none px-6 py-2 rounded-lg font-bold text-sm transition-all text-slate-400 hover:text-white hover:bg-slate-800";
             }
         }
 
-        // View mode switching
-        function setViewMode(mode) {
-            viewMode = mode;
-            const cardView = document.getElementById('card-view');
-            const prompterView = document.getElementById('prompter-view');
-            const cardBtn = document.getElementById('mode-card-btn');
-            const prompterBtn = document.getElementById('mode-prompter-btn');
-
-            if (mode === 'card') {
-                cardView.classList.remove('hidden');
-                cardView.classList.add('flex');
-                prompterView.classList.add('hidden');
-                prompterView.classList.remove('flex');
-
-                cardBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all bg-indigo-600 text-white shadow-sm";
-                prompterBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all text-slate-400 hover:text-white";
-
-                renderCurrentSlideCard();
-            } else {
-                prompterView.classList.remove('hidden');
-                prompterView.classList.add('flex');
-                cardView.classList.add('hidden');
-                cardView.classList.remove('flex');
-
-                prompterBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all bg-indigo-600 text-white shadow-sm";
-                cardBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all text-slate-400 hover:text-white";
-
-                renderPrompterView();
+        function renderSlide() {
+            if (viewMode === 'prompter') {
+                renderPrompter();
+                return;
             }
-        }
 
-        // Navigation controls
-        function nextSlide() {
-            const slides = scriptsData[currentSpeakerKey].slides;
-            if (currentSlideIndex < slides.length - 1) {
-                currentSlideIndex++;
-                renderCurrentSlideCard();
+            const slides = getSlidesData();
+            const slide = slides[currentSlideIdx];
+
+            // Animation Reset
+            const card = document.getElementById('main-slide-card');
+            card.classList.remove('slide-enter');
+            void card.offsetWidth;
+            card.classList.add('slide-enter');
+
+            // Header Update
+            document.getElementById('slide-number-tag').innerText = slide.num;
+            document.getElementById('slide-title').innerText = slide.title;
+            document.getElementById('slide-subtitle').innerText = slide.sub;
+            document.getElementById('slide-timing').innerText = slide.time;
+            
+            // Content Update
+            const box = document.getElementById('speech-content-box');
+            box.innerHTML = '';
+            
+            // Lấy text theo ngôn ngữ hiện tại
+            const sentences = currentLang === 'EN' ? slide.textEN : slide.textVN;
+
+            if (sentences) {
+                sentences.forEach(sentence => {
+                    // Căn chỉnh màu đặc biệt cho phần Q&A
+                    const isQA = sentence.includes("[CÂU HỎI") || sentence.includes("->");
+                    const colorClass = isQA ? (sentence.includes("[CÂU HỎI") ? "text-amber-400" : "text-emerald-400") : "text-slate-100";
+                    
+                    const line = document.createElement('div');
+                    line.className = `${fontClasses[fontSizeIdx]} font-medium ${colorClass} tracking-wide py-2 flex items-start space-x-3 border-b border-slate-800/50 last:border-0`;
+                    line.innerHTML = `<span class="text-indigo-400 font-bold select-none text-xl mt-1.5">•</span><span>${sentence}</span>`;
+                    box.appendChild(line);
+                });
             }
+
+            // Nav Update
+            document.getElementById('current-slide-index').innerText = currentSlideIdx + 1;
+            document.getElementById('total-slides-indicator').innerText = slides.length;
+            document.getElementById('prev-slide-btn').disabled = currentSlideIdx === 0;
+            document.getElementById('next-slide-btn').disabled = currentSlideIdx === slides.length - 1;
         }
 
-        function prevSlide() {
-            if (currentSlideIndex > 0) {
-                currentSlideIndex--;
-                renderCurrentSlideCard();
-            }
-        }
+        function renderPrompter() {
+            const slides = getSlidesData();
+            const box = document.getElementById('prompter-scroll-box');
+            box.innerHTML = '';
 
-        function goToSlide(index) {
-            currentSlideIndex = index;
-            renderCurrentSlideCard();
-        }
-
-        // Dynamic Slide Navigation Pills
-        function renderSlideNavPills() {
-            const container = document.getElementById('slide-nav-pills');
-            const slides = scriptsData[currentSpeakerKey].slides;
-            container.innerHTML = '';
-
-            slides.forEach((slide, idx) => {
-                const button = document.createElement('button');
-                const isActive = idx === currentSlideIndex;
-                button.onclick = () => goToSlide(idx);
-
-                if (isActive) {
-                    button.className = "px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center space-x-2 bg-indigo-600 text-white shadow-md border border-indigo-400";
-                } else {
-                    button.className = "px-3.5 py-1.5 rounded-xl text-xs font-medium transition flex items-center space-x-2 bg-slate-900/80 hover:bg-slate-800 text-slate-400 border border-slate-800";
+            slides.forEach(slide => {
+                const block = document.createElement('div');
+                block.className = "py-8 border-b border-slate-800 last:border-0";
+                
+                const sentences = currentLang === 'EN' ? slide.textEN : slide.textVN;
+                
+                let sentencesHtml = "";
+                if (sentences) {
+                    sentencesHtml = sentences.map(s => {
+                        const isQA = s.includes("[CÂU HỎI") || s.includes("->");
+                        const colorClass = isQA ? (s.includes("[CÂU HỎI") ? "text-amber-400" : "text-emerald-400") : "text-slate-100";
+                        return `
+                        <div class="${fontClasses[fontSizeIdx]} font-medium ${colorClass} py-2.5 flex items-start space-x-3">
+                            <span class="text-indigo-400 font-bold select-none text-xl mt-1.5">•</span><span>${s}</span>
+                        </div>
+                        `
+                    }).join('');
                 }
 
-                button.innerHTML = `
-                    <span class="w-2 h-2 rounded-full ${isActive ? 'bg-white' : 'bg-slate-500'}"></span>
-                    <span>Slide ${slide.number}</span>
-                `;
-                container.appendChild(button);
-            });
-        }
-
-        // Render Active Slide Card
-        function renderCurrentSlideCard() {
-            const slides = scriptsData[currentSpeakerKey].slides;
-            const currentSlide = slides[currentSlideIndex];
-
-            // Trigger CSS entry animation
-            const cardElem = document.getElementById('main-slide-card');
-            cardElem.classList.remove('slide-enter');
-            void cardElem.offsetWidth; 
-            cardElem.classList.add('slide-enter');
-
-            document.getElementById('slide-number-tag').innerText = currentSlide.number;
-            document.getElementById('slide-badge-title').innerText = currentSlide.title;
-            document.getElementById('slide-subtitle').innerText = currentSlide.subtitle;
-            document.getElementById('slide-time-estimate').innerText = currentSlide.time;
-            document.getElementById('slide-summary-text').innerText = currentSlide.summary;
-            
-            // Render sentences line by line
-            const speechBox = document.getElementById('speech-content-box');
-            speechBox.innerHTML = '';
-
-            const sentences = Array.isArray(currentSlide.text) ? currentSlide.text : [currentSlide.text];
-            sentences.forEach(sentence => {
-                const line = document.createElement('div');
-                line.className = `${fontClasses[fontSizeLevel]} font-medium text-slate-100 tracking-wide font-sans leading-relaxed py-1.5 flex items-start space-x-2 border-b border-slate-800/40 last:border-0`;
-                line.innerHTML = `<span class="text-indigo-400 font-bold select-none text-sm mt-1">•</span><span>"${sentence}"</span>`;
-                speechBox.appendChild(line);
-            });
-
-            document.getElementById('current-slide-index').innerText = currentSlideIndex + 1;
-            document.getElementById('total-slides-indicator').innerText = slides.length;
-
-            // Nav Buttons State
-            document.getElementById('prev-slide-btn').disabled = currentSlideIndex === 0;
-            document.getElementById('next-slide-btn').disabled = currentSlideIndex === slides.length - 1;
-
-            renderSlideNavPills();
-        }
-
-        // Render Teleprompter View
-        function renderPrompterView() {
-            const box = document.getElementById('prompter-scroll-box');
-            const slides = scriptsData[currentSpeakerKey].slides;
-
-            box.innerHTML = '';
-            slides.forEach((slide) => {
-                const block = document.createElement('div');
-                block.className = 'py-6 border-b border-slate-800/60 last:border-0';
-                
-                const sentences = Array.isArray(slide.text) ? slide.text : [slide.text];
-                const sentencesHtml = sentences.map(s => `
-                    <div class="${fontClasses[fontSizeLevel]} font-medium text-slate-100 leading-relaxed font-sans py-2 flex items-start space-x-2">
-                        <span class="text-indigo-400 font-bold select-none text-sm mt-1">•</span>
-                        <span>${s}</span>
-                    </div>
-                `).join('');
-
                 block.innerHTML = `
-                    <div class="flex items-center space-x-2 mb-3">
-                        <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-indigo-600/30 text-indigo-300 border border-indigo-500/40">
-                            Slide ${slide.number}
-                        </span>
-                        <span class="text-xs font-semibold text-slate-400">${slide.subtitle}</span>
-                        <span class="text-xs text-amber-400/80 ml-auto"><i class="fa-regular fa-clock mr-1"></i>${slide.time}</span>
+                    <div class="mb-4 flex items-center space-x-3">
+                        <span class="px-3 py-1 bg-indigo-600 text-white rounded text-xs font-bold">Slide ${slide.num}</span>
+                        <span class="text-sm font-semibold text-slate-400">${slide.title}</span>
                     </div>
-                    <div class="space-y-1">
-                        ${sentencesHtml}
-                    </div>
+                    <div class="space-y-1">${sentencesHtml}</div>
                 `;
                 box.appendChild(block);
             });
         }
 
-        // Font size control
-        function changeFontSize(delta) {
-            fontSizeLevel = Math.max(0, Math.min(3, fontSizeLevel + delta));
-            document.getElementById('font-size-label').innerText = fontSizeLabels[fontSizeLevel];
-            if (viewMode === 'card') {
-                renderCurrentSlideCard();
+        function nextSlide() {
+            const slides = getSlidesData();
+            if (currentSlideIdx < slides.length - 1) { currentSlideIdx++; renderSlide(); }
+        }
+
+        function prevSlide() {
+            if (currentSlideIdx > 0) { currentSlideIdx--; renderSlide(); }
+        }
+
+        function setViewMode(mode) {
+            viewMode = mode;
+            const cBtn = document.getElementById('mode-card-btn');
+            const pBtn = document.getElementById('mode-prompter-btn');
+            
+            if (mode === 'card') {
+                document.getElementById('card-view').classList.replace('hidden', 'flex');
+                document.getElementById('prompter-view').classList.replace('flex', 'hidden');
+                cBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow";
+                pBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800";
+                renderSlide();
             } else {
-                renderPrompterView();
+                document.getElementById('card-view').classList.replace('flex', 'hidden');
+                document.getElementById('prompter-view').classList.replace('hidden', 'flex');
+                pBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow";
+                cBtn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800";
+                renderPrompter();
             }
         }
 
-        // Web Speech API Practice Sound
-        function speakCurrentText() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const rawText = scriptsData[currentSpeakerKey].slides[currentSlideIndex].text;
-                const fullText = Array.isArray(rawText) ? rawText.join(' ') : rawText;
-                const utterance = new SpeechSynthesisUtterance(fullText);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            }
+        function changeFontSize(dir) {
+            fontSizeIdx = Math.max(0, Math.min(3, fontSizeIdx + dir));
+            renderSlide();
         }
 
-        // Timer Functions
+        // Timer
+        let timerInt = null, seconds = 0, isTimer = false;
         function toggleTimer() {
             const icon = document.getElementById('timer-icon');
-            if (isTimerRunning) {
-                clearInterval(timerInterval);
-                isTimerRunning = false;
-                icon.className = "fa-solid fa-play";
+            if (isTimer) {
+                clearInterval(timerInt); isTimer = false; icon.className = "fa-solid fa-play";
             } else {
-                isTimerRunning = true;
-                icon.className = "fa-solid fa-pause";
-                timerInterval = setInterval(() => {
-                    timerSeconds++;
-                    const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
-                    const secs = String(timerSeconds % 60).padStart(2, '0');
-                    document.getElementById('timer-display').innerText = `${mins}:${secs}`;
+                isTimer = true; icon.className = "fa-solid fa-pause";
+                timerInt = setInterval(() => {
+                    seconds++;
+                    const m = String(Math.floor(seconds/60)).padStart(2,'0');
+                    const s = String(seconds%60).padStart(2,'0');
+                    document.getElementById('timer-display').innerText = `${m}:${s}`;
                 }, 1000);
             }
         }
-
         function resetTimer() {
-            clearInterval(timerInterval);
-            isTimerRunning = false;
-            timerSeconds = 0;
-            document.getElementById('timer-display').innerText = "00:00";
+            clearInterval(timerInt); isTimer = false; seconds = 0;
             document.getElementById('timer-icon').className = "fa-solid fa-play";
+            document.getElementById('timer-display').innerText = "00:00";
         }
 
-        // Teleprompter Auto-Scroll
+        // Prompter Auto-Scroll
+        let scrollInt = null, isScroll = false, speed = 3;
         function toggleAutoScroll() {
             const box = document.getElementById('prompter-scroll-box');
             const icon = document.getElementById('scroll-icon');
-            const btnText = document.getElementById('scroll-btn-text');
-
-            if (isAutoScrolling) {
-                clearInterval(scrollInterval);
-                isAutoScrolling = false;
+            if (isScroll) {
+                clearInterval(scrollInt); isScroll = false;
                 icon.className = "fa-solid fa-play";
-                btnText.innerText = "Cuộn tự động";
+                document.getElementById('scroll-btn-text').innerText = "Cuộn tự động";
             } else {
-                isAutoScrolling = true;
-                icon.className = "fa-solid fa-pause";
-                btnText.innerText = "Tạm dừng";
-
-                scrollInterval = setInterval(() => {
-                    box.scrollTop += scrollSpeed;
-                    if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
-                        toggleAutoScroll();
-                    }
+                isScroll = true; icon.className = "fa-solid fa-pause";
+                document.getElementById('scroll-btn-text').innerText = "Tạm dừng";
+                scrollInt = setInterval(() => {
+                    box.scrollTop += speed;
+                    if(box.scrollTop + box.clientHeight >= box.scrollHeight) toggleAutoScroll();
                 }, 50);
             }
         }
+        function updateScrollSpeed() { speed = parseInt(document.getElementById('scroll-speed').value); }
+        function toggleMirrorMode() { document.getElementById('prompter-scroll-box').classList.toggle('mirror-mode'); }
 
-        function updateScrollSpeed() {
-            const speedInput = document.getElementById('scroll-speed');
-            scrollSpeed = parseInt(speedInput.value);
-            document.getElementById('speed-display').innerText = `${scrollSpeed}x`;
-        }
-
-        function toggleMirrorMode() {
-            const box = document.getElementById('prompter-scroll-box');
-            box.classList.toggle('mirror-mode');
-        }
-
-        function resetPrompterScroll() {
-            const box = document.getElementById('prompter-scroll-box');
-            box.scrollTop = 0;
-        }
-
-        // Theme Toggle
-        function toggleTheme() {
-            const html = document.documentElement;
-            const themeIcon = document.getElementById('theme-icon');
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                html.classList.add('light');
-                document.body.className = "bg-slate-100 text-slate-800 min-h-screen flex flex-col transition-colors duration-300 antialiased overflow-x-hidden";
-                themeIcon.className = "fa-solid fa-sun text-amber-500";
-            } else {
-                html.classList.remove('light');
-                html.classList.add('dark');
-                document.body.className = "bg-darkbg text-slate-100 min-h-screen flex flex-col transition-colors duration-300 antialiased overflow-x-hidden";
-                themeIcon.className = "fa-solid fa-moon text-indigo-400";
-            }
-        }
-
-        // Keyboard Shortcuts & Touch Gestures
-        function setupKeyboardAndTouchListeners() {
-            window.addEventListener('keydown', (e) => {
-                if (viewMode !== 'card') return;
-                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
-                    e.preventDefault();
-                    nextSlide();
-                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-                    e.preventDefault();
-                    prevSlide();
-                }
-            });
-
-            // Touch Swipe Gestures
-            let touchStartX = 0;
-            let touchEndX = 0;
-            const cardElem = document.getElementById('main-slide-card');
-
-            cardElem.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, false);
-
-            cardElem.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, false);
-
-            function handleSwipe() {
-                if (viewMode !== 'card') return;
-                const threshold = 50;
-                if (touchEndX < touchStartX - threshold) {
-                    nextSlide();
-                } else if (touchEndX > touchStartX + threshold) {
-                    prevSlide();
-                }
-            }
-        }
-
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            updateSpeakerHeader();
-            updateTabStyles();
-            renderCurrentSlideCard();
-            setupKeyboardAndTouchListeners();
+        window.addEventListener('keydown', (e) => {
+            if (viewMode !== 'card') return;
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
         });
+
+        window.onload = initApp;
     </script>
 </body>
 </html>
